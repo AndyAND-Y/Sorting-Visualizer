@@ -1,7 +1,6 @@
 "use client";
 import AnimatedNavbar from '@/components/Navbar';
 import SortingVisualizer from '@/components/SortingVisualizer';
-import useSelectSortingAlgo from '@/util/hooks/useSelectSortingAlgo';
 
 export default function Home() {
 

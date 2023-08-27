@@ -3,9 +3,6 @@ import generateArray from "@/util/array/generate";
 import Bar from "./Bar";
 import { useEffect, useRef, useState } from "react";
 import { Animation } from "@/types/Animation";
-import selectionSort from "@/util/array/sorting/selectionSort";
-import bubbleSort from "@/util/array/sorting/bubbleSort";
-import mergeSort from "@/util/array/sorting/mergeSort";
 import { ClipLoader } from "react-spinners";
 import useSelectSortingAlgo from "@/util/hooks/useSelectSortingAlgo";
 import SelectorSortingAlgorithms from "@/util/array/sortSelector";
@@ -19,11 +16,12 @@ const barSizes = {
 
 const animationSpeedFunction = (x: number) => {
     if (x < 3) {
-        return Math.pow(1.5, x);
+        return Number(Math.pow(1.5, x).toFixed(1));
     }
-    if (x < 10) return 2 * x;
-    return 5 * x;
+    return Number((Math.pow(1.5, x) + (x - 3) * Math.pow(1.5, x / 2)).toFixed(0));
 }
+
+
 
 const nicerNumber = (x: number) => {
     return Math.floor(Math.floor(x) / 5) * 5;
@@ -41,11 +39,13 @@ export default function SortingVisualizer() {
     const [speedView, setSpeedView] = useState("0");
     const [pageLoading, setPageLoading] = useState(true);
     const [numberOfComparison, setNumberOfComparison] = useState(0);
+
+    const audioCtx = useRef(new AudioContext);
     const animationSpeed = useRef(defaultAnimationSpeed / 2);
     const animationsRef = useRef<Animation[]>([]);
-    const [sortingAlgo] = useSelectSortingAlgo();
-
     const windowRef = useRef<Window | null>(null);
+
+    const [sortingAlgo, setSortingAlgo] = useSelectSortingAlgo();
 
     useEffect(() => {
         setArr(generateArray(arraySize));
@@ -115,8 +115,8 @@ export default function SortingVisualizer() {
             setArr([...arrCopy]);
         }
         else if (animation.type === "overwrite") {
-            setOverwriteArr(getAnimationStateArray(arrCopy.length, animation.i, animation.i));
             arrCopy[animation.i] = animation.value;
+            setOverwriteArr(getAnimationStateArray(arrCopy.length, animation.i, animation.i));
             setArr([...arrCopy]);
         }
         else if (animation.type === "default") {
@@ -160,14 +160,14 @@ export default function SortingVisualizer() {
                     {!isSorting ?
                         <button className="bg-blue-500 w-24 p-2 rounded-xl"
                             onClick={handleGenerateBtn}
-                        >Generate! </button>
+                        >Generate!</button>
                         :
                         <button
                             className="bg-blue-500 w-24 rounded-xl"
                         >
-                            <p className="mx-1">Sorting  <ClipLoader
-                                size={12}
-                            /></p>
+                            <p className="mx-1">Sorting
+                                <ClipLoader size={12} />
+                            </p>
 
                         </button>
 
@@ -183,9 +183,9 @@ export default function SortingVisualizer() {
                         <button
                             className="bg-blue-500 w-24 rounded-xl"
                         >
-                            <p className="mx-1">Sorting  <ClipLoader
-                                size={12}
-                            /></p>
+                            <p className="mx-1">Sorting
+                                <ClipLoader size={12} />
+                            </p>
 
                         </button>
 
@@ -207,7 +207,7 @@ export default function SortingVisualizer() {
                         }}
 
                     />
-                    <p className="flex justify-center">Speed: {animationSpeedFunction(Number(speedView)).toFixed(1) + "x"}</p>
+                    <p className="flex justify-center">Speed: {animationSpeedFunction(Number(speedView)) + "x"}</p>
                 </div>
 
                 <div className="flex flex-col justify-center items-center">
@@ -225,6 +225,7 @@ export default function SortingVisualizer() {
                     />
                     <p className="flex justify-center">Size of array: {arraySize}</p>
                 </div>
+
             </div>
         </div>
 

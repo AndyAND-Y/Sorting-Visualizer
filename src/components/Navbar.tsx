@@ -1,8 +1,9 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import useSelectSortingAlgo from '@/util/hooks/useSelectSortingAlgo';
 import { SortingAlgoType } from '@/types/SortingType';
+
 
 const AnimatedNavbar = () => {
 
@@ -14,15 +15,10 @@ const AnimatedNavbar = () => {
     }
 
     const handleOnMouseLeave = () => {
-
-        setTimeout(() => {
-            setIsNavbarOn(false);
-        }, 500);
-
+        setIsNavbarOn(false);
     }
 
     const handleAlgoChange = (newAlgo: string) => {
-        console.log("newAlgo: ", newAlgo);
         setSortingAlgo(newAlgo as SortingAlgoType);
     }
 
@@ -40,8 +36,13 @@ const AnimatedNavbar = () => {
                 onMouseEnter={handleOnMouseEnter}
                 onMouseLeave={handleOnMouseLeave}
             >
-                <nav className="flex justify-center p-4 text-slate-700">
-                    <select className="flex space-x-4"
+                <motion.nav className="flex justify-center p-4 text-slate-700"
+                    animate={{
+                        scale: isNavbarOn ? 1 : 0.5,
+                        y: isNavbarOn ? '0%' : "-100%"
+                    }}
+                >
+                    <select className="flex space-x-4 px-2 p-1 rounded-2xl"
                         onChange={(e) => handleAlgoChange(e.target.value)}
                         value={sortingAlgo}
                         disabled={!isNavbarOn}
@@ -50,7 +51,7 @@ const AnimatedNavbar = () => {
                         <option value="selectionSort">SelectionSort</option>
                         <option value="mergeSort">MergeSort</option>
                     </select>
-                </nav>
+                </motion.nav>
             </motion.div>
 
         </>
