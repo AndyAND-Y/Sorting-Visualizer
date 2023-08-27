@@ -40,7 +40,6 @@ export default function SortingVisualizer() {
     const [pageLoading, setPageLoading] = useState(true);
     const [numberOfComparison, setNumberOfComparison] = useState(0);
 
-    const audioCtx = useRef(new AudioContext);
     const animationSpeed = useRef(defaultAnimationSpeed / 2);
     const animationsRef = useRef<Animation[]>([]);
     const windowRef = useRef<Window | null>(null);
