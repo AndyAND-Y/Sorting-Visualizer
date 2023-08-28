@@ -8,11 +8,9 @@ export default function mergeSort(toSortArr: number[]) {
     const animations: Animation[] = [];
     const tmp = [...arr];
 
-    console.log(arr);
     mergeSortHelper(arr, 0, arr.length - 1, tmp, animations);
-    console.log(arr);
 
-    return [...animations];
+    return animations;
 }
 
 
@@ -39,14 +37,12 @@ function mergeSortMerger(arr: number[], start: number, mid: number, end: number,
 
         compareAnimation(animations, i, j);
         if (arr[i] < arr[j]) {
-            console.log("O1 ", i, k);
             overwriteAnimation(animations, k, arr[i]);
             tmp[k] = arr[i];
             i++;
             k++;
         }
         else {
-            console.log("O2 ", j, k);
             overwriteAnimation(animations, k, arr[j]);
             tmp[k] = arr[j];
             j++;
@@ -55,7 +51,6 @@ function mergeSortMerger(arr: number[], start: number, mid: number, end: number,
     }
 
     while (i <= mid) {
-        console.log("O3 ", i, k);
         overwriteAnimation(animations, k, arr[i]);
         tmp[k] = arr[i];
         i++;
@@ -63,7 +58,6 @@ function mergeSortMerger(arr: number[], start: number, mid: number, end: number,
     }
 
     while (j <= end) {
-        console.log("O4 ", j, k);
         overwriteAnimation(animations, k, arr[j]);
         tmp[k] = arr[j];
         j++;

@@ -39,10 +39,13 @@ export default function SortingVisualizer() {
     const [speedView, setSpeedView] = useState("0");
     const [pageLoading, setPageLoading] = useState(true);
     const [numberOfComparison, setNumberOfComparison] = useState(0);
+    const [timeTaken, setTimeTaken] = useState(0);
+    const [animationTimeTaken, setAnimationTimeTaken] = useState(0);
 
     const animationSpeed = useRef(defaultAnimationSpeed / 2);
     const animationsRef = useRef<Animation[]>([]);
     const windowRef = useRef<Window | null>(null);
+
 
     const [sortingAlgo, setSortingAlgo] = useSelectSortingAlgo();
 
@@ -54,11 +57,6 @@ export default function SortingVisualizer() {
         windowRef.current = window;
         setPageLoading(false);
     }, [])
-
-    useEffect(() => {
-        console.log("Rerender");
-        console.log(sortingAlgo);
-    }, [sortingAlgo])
 
     const getState = (index: number): Animation['type'] => {
         if (swapArr[index]) return "swap";
@@ -81,9 +79,12 @@ export default function SortingVisualizer() {
 
         setIsSorting(true);
         setNumberOfComparison(0);
+        setAnimationTimeTaken(0);
         animationsRef.current = [];
+        const timeStart = performance.now();
         const animations = SelectorSortingAlgorithms.getSortFunction(sortingAlgo)(arr);
-        console.log(sortingAlgo);
+        const timeEnd = performance.now();
+        setTimeTaken(timeEnd - timeStart);
         animationsRef.current = animations;
         const arrCopy = [...arr];
 
@@ -125,6 +126,7 @@ export default function SortingVisualizer() {
         }
 
         setTimeout(() => {
+            setAnimationTimeTaken((prev) => prev + animationSpeed.current);
             animate(arrCopy);
         }, animationSpeed.current)
     }
@@ -140,8 +142,7 @@ export default function SortingVisualizer() {
     }
 
     return (<>
-        <div className="h-screen">
-            <div>Number Of Comparison: {numberOfComparison}</div>
+        <div className="h-screen m-2 p-2">
             <div className="flex justify-center h-3/4 items-end p-2 overflow-auto m-4 border-b border-black">
                 {arr.map((el, index) => {
                     return (
@@ -225,6 +226,22 @@ export default function SortingVisualizer() {
                     <p className="flex justify-center">Size of array: {arraySize}</p>
                 </div>
 
+            </div>
+            <div className="flex justify-center m-1 p-1">
+                <div
+                    className="text-lg p-2 m-2 shadow-lg border-b border-blue-500 w-fit rounded-3xl"
+                >
+                    Number of comparison: {numberOfComparison}</div>
+                <div
+                    className="text-lg p-2 m-2 shadow-lg border-b border-blue-500 w-fit rounded-3xl"
+                >
+                    Real time taken: {timeTaken.toFixed(2)} ms
+                </div>
+                <div
+                    className="text-lg p-2 m-2 shadow-lg border-b border-blue-500 w-fit rounded-3xl"
+                >
+                    Animation time taken: {(animationTimeTaken / 1000).toFixed(2)} s
+                </div>
             </div>
         </div>
 
