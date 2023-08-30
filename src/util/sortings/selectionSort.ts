@@ -1,6 +1,6 @@
 import { Animation } from "@/types/Animation";
-import swapAnimation from "../swap";
-import compareAnimation from "../compare";
+import swapAnimation from "../array/swap";
+import compareAnimation from "../array/compare";
 
 export default function selectionSort(toSortArr: number[]) {
     const arr = [...toSortArr];

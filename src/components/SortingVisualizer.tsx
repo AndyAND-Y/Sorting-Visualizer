@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { Animation } from "@/types/Animation";
 import { ClipLoader } from "react-spinners";
 import useSelectSortingAlgo from "@/util/hooks/useSelectSortingAlgo";
-import SelectorSortingAlgorithms from "@/util/array/sortSelector";
+import SelectorSortingAlgorithms from "@/util/sortings/sortSelector";
 
 const defaultAnimationSpeed = 200;
 
@@ -142,8 +142,8 @@ export default function SortingVisualizer() {
     }
 
     return (<>
-        <div className="h-screen m-2 p-2">
-            <div className="flex justify-center h-3/4 items-end p-2 overflow-auto m-4 border-b border-black">
+        <div className="h-full">
+            <div className="flex justify-center h-3/4 items-end p-2 overflow-auto m-4 border-b border-slate-700">
                 {arr.map((el, index) => {
                     return (
                         <Bar
@@ -155,92 +155,98 @@ export default function SortingVisualizer() {
                     )
                 })}
             </div>
-            <div className="flex sm:flex-row justify-center gap-2 p-2 flex-col">
-                <div className="flex justify-center">
-                    {!isSorting ?
-                        <button className="bg-blue-500 w-24 p-2 rounded-xl"
-                            onClick={handleGenerateBtn}
-                        >Generate!</button>
-                        :
-                        <button
-                            className="bg-blue-500 w-24 rounded-xl"
-                        >
-                            <p className="mx-1">Sorting
-                                <ClipLoader size={12} />
-                            </p>
+            <div className="h-1/4">
+                <div className="flex justify-center gap-2 p-2 flex-col sm:flex-row">
+                    <div className="flex justify-center">
+                        {!isSorting ?
+                            <button className="bg-blue-500 w-24 p-2 rounded-xl"
+                                onClick={handleGenerateBtn}
+                            >Generate!</button>
+                            :
+                            <button
+                                className="bg-blue-500 w-24 rounded-xl"
+                            >
+                                <p className="mx-1">Sorting
+                                    <ClipLoader size={12} />
+                                </p>
 
-                        </button>
+                            </button>
 
-                    }
+                        }
+
+                    </div>
+                    <div className="flex justify-center">
+                        {!isSorting ?
+                            <button className="bg-blue-500 w-24 p-2 rounded-xl"
+                                onClick={handleSortBtn}
+                            >Sort!</button>
+                            :
+                            <button
+                                className="bg-blue-500 w-24 rounded-xl"
+                            >
+                                <p className="mx-1">Sorting
+                                    <ClipLoader size={12} />
+                                </p>
+
+                            </button>
+
+                        }
+                    </div>
+
+                    <div className="flex flex-col justify-center items-center">
+                        <input
+                            className="w-24"
+                            type="range"
+                            min={-3}
+                            max={10}
+                            value={speedView}
+                            step={"any"}
+                            onChange={(e) => {
+                                const speed = Number(e.target.value);
+                                animationSpeed.current = defaultAnimationSpeed / animationSpeedFunction(speed);
+                                setSpeedView(e.target.value);
+                            }}
+
+                        />
+                        <p className="flex justify-center">Speed: {animationSpeedFunction(Number(speedView)) + "x"}</p>
+                    </div>
+
+                    <div className="flex flex-col justify-center items-center">
+                        <input
+                            className="w-24"
+                            type="range"
+                            min={5}
+                            max={nicerNumber((window.innerWidth - 100) / barSizes.small)}
+                            value={arraySize}
+                            disabled={isSorting}
+                            onChange={(e) => {
+                                setArraySize(Number(e.target.value));
+                            }}
+
+                        />
+                        <p className="flex justify-center">Size of array: {arraySize}</p>
+                    </div>
 
                 </div>
-                <div className="flex justify-center">
-                    {!isSorting ?
-                        <button className="bg-blue-500 w-24 p-2 rounded-xl"
-                            onClick={handleSortBtn}
-                        >Sort!</button>
-                        :
-                        <button
-                            className="bg-blue-500 w-24 rounded-xl"
-                        >
-                            <p className="mx-1">Sorting
-                                <ClipLoader size={12} />
-                            </p>
-
-                        </button>
-
-                    }
-                </div>
-
-                <div className="flex flex-col justify-center items-center">
-                    <input
-                        className="w-24"
-                        type="range"
-                        min={-3}
-                        max={10}
-                        value={speedView}
-                        step={"any"}
-                        onChange={(e) => {
-                            const speed = Number(e.target.value);
-                            animationSpeed.current = defaultAnimationSpeed / animationSpeedFunction(speed);
-                            setSpeedView(e.target.value);
-                        }}
-
-                    />
-                    <p className="flex justify-center">Speed: {animationSpeedFunction(Number(speedView)) + "x"}</p>
-                </div>
-
-                <div className="flex flex-col justify-center items-center">
-                    <input
-                        className="w-24"
-                        type="range"
-                        min={5}
-                        max={nicerNumber((window.innerWidth - 100) / barSizes.small)}
-                        value={arraySize}
-                        disabled={isSorting}
-                        onChange={(e) => {
-                            setArraySize(Number(e.target.value));
-                        }}
-
-                    />
-                    <p className="flex justify-center">Size of array: {arraySize}</p>
-                </div>
-
-            </div>
-            <div className="flex justify-center m-1 p-1">
-                <div
-                    className="text-lg p-2 m-2 shadow-lg border-b border-blue-500 w-fit rounded-3xl"
-                >
-                    Number of comparison: {numberOfComparison}</div>
-                <div
-                    className="text-lg p-2 m-2 shadow-lg border-b border-blue-500 w-fit rounded-3xl"
-                >
-                    Real time taken: {timeTaken.toFixed(2)} ms
-                </div>
-                <div
-                    className="text-lg p-2 m-2 shadow-lg border-b border-blue-500 w-fit rounded-3xl"
-                >
-                    Animation time taken: {(animationTimeTaken / 1000).toFixed(2)} s
+                <div className="flex flex-col justify-center m-1 p-1 sm:flex-row items-center">
+                    <div
+                        className="text-lg p-2 m-2 shadow-lg border-b border-blue-500 w-72 rounded-3xl text-center"
+                    >
+                        Number of comparison:
+                        {numberOfComparison}
+                    </div>
+                    <div
+                        className="text-lg p-2 m-2 shadow-lg border-b border-blue-500 w-72 rounded-3xl text-center"
+                    >
+                        Real time taken:
+                        {timeTaken.toFixed(2)}ms
+                    </div>
+                    <div
+                        className="text-lg p-2 m-2 shadow-lg border-b border-blue-500 w-72 rounded-3xl text-center"
+                    >
+                        Animation time taken:
+                        {(animationTimeTaken / 1000).toFixed(2)}s
+                    </div>
                 </div>
             </div>
         </div>

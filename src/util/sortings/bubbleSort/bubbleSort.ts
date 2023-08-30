@@ -1,6 +1,6 @@
 import { Animation } from "@/types/Animation";
-import compareAnimation from "../compare";
-import swapAnimation from "../swap";
+import compareAnimation from "../../array/compare";
+import swapAnimation from "../../array/swap";
 
 export default function bubbleSort(toSortArr: number[]) {
 
