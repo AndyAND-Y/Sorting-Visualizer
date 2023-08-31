@@ -5,6 +5,7 @@ import mergeSort from "./mergeSort";
 import selectionSort from "./selectionSort";
 
 import codeExampleBubbleSort from "./bubbleSort/codeExamples";
+import bubbleSortText from "./bubbleSort/textInfo";
 
 const sortingAlgosMap = {
     bubbleSort,
@@ -18,12 +19,22 @@ const sortingCodeExamplesMap = {
     selectionSort: codeExampleBubbleSort,
 } as const;
 
+const sortingTextMap = {
+    bubbleSort: bubbleSortText,
+    mergeSort: bubbleSortText,
+    selectionSort: bubbleSortText,
+} as const;
+
+
 class SelectorSortingAlgorithms {
     static getSortFunction(sortName: SortingAlgoType) {
         return sortingAlgosMap[sortName];
     }
     static getSortCodeExamples(sortName: SortingAlgoType) {
         return sortingCodeExamplesMap[sortName];
+    }
+    static getSortText(sortName: SortingAlgoType) {
+        return sortingTextMap[sortName];
     }
 }
 

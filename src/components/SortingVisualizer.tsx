@@ -6,6 +6,7 @@ import { Animation } from "@/types/Animation";
 import { ClipLoader } from "react-spinners";
 import useSelectSortingAlgo from "@/util/hooks/useSelectSortingAlgo";
 import SelectorSortingAlgorithms from "@/util/sortings/sortSelector";
+import Balancer from "react-wrap-balancer";
 
 const defaultAnimationSpeed = 200;
 
@@ -39,7 +40,6 @@ export default function SortingVisualizer() {
     const [speedView, setSpeedView] = useState("0");
     const [pageLoading, setPageLoading] = useState(true);
     const [numberOfComparison, setNumberOfComparison] = useState(0);
-    const [timeTaken, setTimeTaken] = useState(0);
     const [animationTimeTaken, setAnimationTimeTaken] = useState(0);
 
     const animationSpeed = useRef(defaultAnimationSpeed / 2);
@@ -47,7 +47,7 @@ export default function SortingVisualizer() {
     const windowRef = useRef<Window | null>(null);
 
 
-    const [sortingAlgo, setSortingAlgo] = useSelectSortingAlgo();
+    const [sortingAlgo] = useSelectSortingAlgo();
 
     useEffect(() => {
         setArr(generateArray(arraySize));
@@ -55,6 +55,7 @@ export default function SortingVisualizer() {
 
     useEffect(() => {
         windowRef.current = window;
+        setArraySize(nicerNumber((window.innerWidth - 100) / barSizes.medium));
         setPageLoading(false);
     }, [])
 
@@ -81,10 +82,7 @@ export default function SortingVisualizer() {
         setNumberOfComparison(0);
         setAnimationTimeTaken(0);
         animationsRef.current = [];
-        const timeStart = performance.now();
         const animations = SelectorSortingAlgorithms.getSortFunction(sortingAlgo)(arr);
-        const timeEnd = performance.now();
-        setTimeTaken(timeEnd - timeStart);
         animationsRef.current = animations;
         const arrCopy = [...arr];
 
@@ -138,12 +136,19 @@ export default function SortingVisualizer() {
     }
 
     if (pageLoading) {
-        return <div>Loading...</div>
+        return <div
+            className="animate-spin"
+        >
+            <ClipLoader
+                color={"#3b82f6"}
+                size={48}
+            />
+        </div>
     }
 
     return (<>
         <div className="h-full">
-            <div className="flex justify-center h-3/4 items-end p-2 overflow-auto m-4 border-b border-slate-700">
+            <div className="flex justify-center h-4/5 items-end p-2 overflow-auto m-4 border-b border-slate-700">
                 {arr.map((el, index) => {
                     return (
                         <Bar
@@ -159,12 +164,12 @@ export default function SortingVisualizer() {
                 <div className="flex justify-center gap-2 p-2 flex-col sm:flex-row">
                     <div className="flex justify-center">
                         {!isSorting ?
-                            <button className="bg-blue-500 w-24 p-2 rounded-xl"
+                            <button className="border border-blue-500 bg-white w-28 p-2 rounded-xl transition-all hover:bg-slate-100 hover:shadow-md hover:shadow-blue-500"
                                 onClick={handleGenerateBtn}
                             >Generate!</button>
                             :
                             <button
-                                className="bg-blue-500 w-24 rounded-xl"
+                                className="border border-blue-500 bg-white w-28 p-2 rounded-xl transition-all hover:bg-slate-100 hover:shadow-md hover:shadow-blue-500"
                             >
                                 <p className="mx-1">Sorting
                                     <ClipLoader size={12} />
@@ -177,12 +182,12 @@ export default function SortingVisualizer() {
                     </div>
                     <div className="flex justify-center">
                         {!isSorting ?
-                            <button className="bg-blue-500 w-24 p-2 rounded-xl"
+                            <button className="border border-blue-500 bg-white w-28 p-2 rounded-xl transition-all hover:bg-slate-100 hover:shadow-md hover:shadow-blue-500"
                                 onClick={handleSortBtn}
                             >Sort!</button>
                             :
                             <button
-                                className="bg-blue-500 w-24 rounded-xl"
+                                className="border border-blue-500 bg-white w-28 p-2 rounded-xl transition-all hover:bg-slate-100 hover:shadow-md hover:shadow-blue-500"
                             >
                                 <p className="mx-1">Sorting
                                     <ClipLoader size={12} />
@@ -192,61 +197,81 @@ export default function SortingVisualizer() {
 
                         }
                     </div>
+                    <div className="flex justify-center">
+                        <div className="flex flex-col w-28 justify-center items-center border border-blue-500 p-2 rounded-xl transition-all hover:bg-slate-100 hover:shadow-md hover:shadow-blue-500">
+                            <input
+                                className="w-20"
+                                type="range"
+                                min={-3}
+                                max={10}
+                                value={speedView}
+                                step={"any"}
+                                onChange={(e) => {
+                                    const speed = Number(e.target.value);
+                                    animationSpeed.current = defaultAnimationSpeed / animationSpeedFunction(speed);
+                                    setSpeedView(e.target.value);
+                                }}
 
-                    <div className="flex flex-col justify-center items-center">
-                        <input
-                            className="w-24"
-                            type="range"
-                            min={-3}
-                            max={10}
-                            value={speedView}
-                            step={"any"}
-                            onChange={(e) => {
-                                const speed = Number(e.target.value);
-                                animationSpeed.current = defaultAnimationSpeed / animationSpeedFunction(speed);
-                                setSpeedView(e.target.value);
-                            }}
-
-                        />
-                        <p className="flex justify-center">Speed: {animationSpeedFunction(Number(speedView)) + "x"}</p>
+                            />
+                            <p className="flex justify-center">Speed: {animationSpeedFunction(Number(speedView)) + "x"}</p>
+                        </div>
                     </div>
+                    <div className="flex justify-center">
+                        <div className="flex w-28 flex-col justify-center items-center border border-blue-500 p-2 rounded-xl transition-all hover:bg-slate-100 hover:shadow-md hover:shadow-blue-500">
+                            <input
+                                className="w-20"
+                                type="range"
+                                min={5}
+                                max={nicerNumber((window.innerWidth - 100) / barSizes.small)}
+                                value={arraySize}
+                                disabled={isSorting}
+                                onChange={(e) => {
+                                    setArraySize(Number(e.target.value));
+                                }}
 
-                    <div className="flex flex-col justify-center items-center">
-                        <input
-                            className="w-24"
-                            type="range"
-                            min={5}
-                            max={nicerNumber((window.innerWidth - 100) / barSizes.small)}
-                            value={arraySize}
-                            disabled={isSorting}
-                            onChange={(e) => {
-                                setArraySize(Number(e.target.value));
-                            }}
-
-                        />
-                        <p className="flex justify-center">Size of array: {arraySize}</p>
+                            />
+                            <p className="flex justify-center">Size: {arraySize}</p>
+                        </div>
                     </div>
 
                 </div>
                 <div className="flex flex-col justify-center m-1 p-1 sm:flex-row items-center">
+
                     <div
-                        className="text-lg p-2 m-2 shadow-lg border-b border-blue-500 w-72 rounded-3xl text-center"
+                        className="group relative flex justify-center"
                     >
-                        Number of comparison:
-                        {numberOfComparison}
+                        <div
+                            className="text-lg p-2 m-2 shadow-lg border-b border-blue-500 w-48 rounded-3xl text-center"
+                        >
+                            Comparison:
+                            {numberOfComparison}
+                        </div>
+                        <span
+                            className="absolute bottom-16 p-4 w-64 transition-all scale-0 bg-white border-b border-blue-500 group-hover:scale-100 rounded-xl shadow-blue-500 shadow-lg"
+                        >
+                            <Balancer>
+                                The number of comparison is a useful metric for comparing different sorting algorithms.
+                            </Balancer>
+                        </span>
                     </div>
                     <div
-                        className="text-lg p-2 m-2 shadow-lg border-b border-blue-500 w-72 rounded-3xl text-center"
+                        className="group relative flex justify-center"
                     >
-                        Real time taken:
-                        {timeTaken.toFixed(2)}ms
+                        <div
+                            className="text-lg p-2 m-2 shadow-lg border-b border-blue-500 w-48 rounded-3xl text-center"
+                        >
+                            Time:
+                            {(animationTimeTaken / 1000).toFixed(2)}s
+                        </div>
+                        <span
+                            className="absolute bottom-16 w-64 p-4 transition-all scale-0 bg-white border-b border-blue-500 group-hover:scale-100 rounded-xl shadow-blue-500 shadow-lg"
+                        >
+                            <Balancer>
+                                The number of comparison is a useful metric for comparing different sorting algorithms.
+                            </Balancer>
+                        </span>
                     </div>
-                    <div
-                        className="text-lg p-2 m-2 shadow-lg border-b border-blue-500 w-72 rounded-3xl text-center"
-                    >
-                        Animation time taken:
-                        {(animationTimeTaken / 1000).toFixed(2)}s
-                    </div>
+
                 </div>
             </div>
         </div>

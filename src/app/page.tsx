@@ -9,7 +9,7 @@ export default function Home() {
     return (
         <>
             <AnimatedNavbar />
-            <div className='h-[90vh]'>
+            <div className='h-[95vh]'>
                 <div className='flex justify-center items-center w-full sm:h-full h-4/6'>
                     <SortingVisualizer />
                 </div>

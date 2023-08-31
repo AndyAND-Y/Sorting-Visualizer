@@ -7,25 +7,22 @@ import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlig
 import { a11yDark, a11yLight } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { COriginal, CplusplusOriginal, TypescriptOriginal, JavascriptOriginal, PythonOriginal, RustPlain, JavaOriginal, CsharpOriginal, GoOriginal } from "devicons-react";
 import { motion } from "framer-motion"
+import { Balancer } from "react-wrap-balancer";
+import Latex from 'react-latex-next';
+import "katex/dist/katex.min.css";
 
 export default function InfoSection() {
-
-    const [sortingAlgo] = useSelectSortingAlgo();
 
 
     return (
         <>
-            <div className="flex justify-center items-center mb-16 mx-2 p-4">
+            <div className="flex justify-center items-center my-16 mx-2">
 
                 <div
-                    className="flex justify-center gap-12 w-3/5 flex-col lg:flex-row"
+                    className="w-2/3 grid lg:grid-cols-2 gap-12 grid-cols-1"
                 >
                     <CodeSection />
-                    <div className="w-1/2">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                    </div>
+                    <TextSection />
                 </div>
             </div >
         </>
@@ -50,6 +47,94 @@ const LiElement: React.FC<{ children: React.ReactNode, setLanguage: Dispatch<Set
     );
 };
 
+function ComplexityOn() {
+    const text = "$\\mathcal{O}(n)$";
+    return (<Latex>{text}</Latex>)
+}
+function ComplexityOnlgn() {
+    const text = "$\\mathcal{O}(n\\log n)$";
+    return (<Latex>{text}</Latex>)
+}
+function ComplexityOn2() {
+    const text = "$\\mathcal{O}(n^2)$";
+    return (<Latex>{text}</Latex>)
+}
+function ComplexityO1() {
+    const text = "$\\mathcal{O}(1)$";
+    return (<Latex>{text}</Latex>)
+}
+
+
+function getComplexity(complexity: string) {
+    if (complexity === "O(n)") return <ComplexityOn />
+}
+
+function TextSection() {
+    const [sorting] = useSelectSortingAlgo();
+
+    const worstComplexity = "O(n)"
+
+    return (<>
+        <div className="">
+
+            <div className="flex justify-center">
+                <ul className="grid w-full sm:grid-cols-3 grid-cols-1 justify-center text-center gap-4 p-1 text-xl">
+
+                    <div className="flex justify-center flex-col">
+                        <p>Worst</p>
+                        <p>Time:</p>
+                        {getComplexity(worstComplexity)}
+                    </div>
+                    <div className="flex justify-center flex-col">
+                        <p>Average</p>
+                        <p>Time:</p>
+                        {getComplexity(worstComplexity)}
+                    </div>
+
+                    <div className="flex justify-center flex-col">
+                        <p>Auxiliary</p>
+                        <p>Space:</p>
+                        {getComplexity(worstComplexity)}
+                    </div>
+                </ul>
+            </div>
+
+            <Balancer>
+                {SelectorSortingAlgorithms.getSortText(sorting).split(" ").map((el, index) => {
+
+                    if (el.toLocaleLowerCase().startsWith("o(n^2)")) {
+                        return (<>
+                            <ComplexityOn2 key={index} />
+                            {el.slice(6) + " "}
+                        </>)
+                    }
+
+                    if (el.toLocaleLowerCase().startsWith("o(n)")) {
+                        return (<>
+                            <ComplexityOn key={index} />
+                            {el.slice(4) + " "}
+                        </>)
+                    }
+                    if (el.toLocaleLowerCase().startsWith("o(1)")) {
+                        return (<>
+                            <ComplexityO1 key={index} />
+                            {el.slice(4) + " "}
+                        </>)
+                    }
+                    if (el.toLocaleLowerCase().startsWith("o(nlgn)")) {
+                        return (<>
+                            <ComplexityOnlgn key={index} />
+                            {el.slice(7) + " "}
+                        </>)
+                    }
+
+                    return el + " ";
+                })}
+            </Balancer>
+        </div>
+    </>)
+}
+
 function CodeSection() {
     const [language, setLanguage] = useState<ProgrammingLanguageType>("typescript");
     const [sorting] = useSelectSortingAlgo();
@@ -61,43 +146,41 @@ function CodeSection() {
 
     return (<>
 
-        <div className="w-1/2">
+        <div className="">
 
-            <ul className="flex justify-center text-center border-b border-gray-700 gap-2 p-1">
-                <LiElement setLanguage={setLanguage} language={"c"}>
-                    <COriginal size={"32"} />
-                </LiElement>
-                <LiElement setLanguage={setLanguage} language={"cpp"}>
-                    <CplusplusOriginal size={"32"} />
-                </LiElement >
-                <LiElement setLanguage={setLanguage} language={"python"}>
-                    <PythonOriginal size={"32"} />
-                </LiElement>
-                <LiElement setLanguage={setLanguage} language={"typescript"}>
-                    <TypescriptOriginal size={"32"} />
-                </LiElement>
+            <div className="flex justify-center">
+                <ul className="grid w-full sm:grid-cols-8 grid-cols-4 justify-center text-center border-b border-gray-700 gap-4 p-1">
+                    <LiElement setLanguage={setLanguage} language={"c"}>
+                        <COriginal size={"32"} />
+                    </LiElement>
+                    <LiElement setLanguage={setLanguage} language={"cpp"}>
+                        <CplusplusOriginal size={"32"} />
+                    </LiElement >
+                    <LiElement setLanguage={setLanguage} language={"python"}>
+                        <PythonOriginal size={"32"} />
+                    </LiElement>
+                    <LiElement setLanguage={setLanguage} language={"typescript"}>
+                        <TypescriptOriginal size={"32"} />
+                    </LiElement>
 
-                <LiElement setLanguage={setLanguage} language={"javascript"}>
-                    <JavascriptOriginal size={"32"} />
-                </LiElement>
+                    <LiElement setLanguage={setLanguage} language={"javascript"}>
+                        <JavascriptOriginal size={"32"} />
+                    </LiElement>
+                    <LiElement setLanguage={setLanguage} language={"java"}>
+                        <JavaOriginal size={"32"} />
+                    </LiElement>
+                    <LiElement setLanguage={setLanguage} language={"csharp"}>
+                        <CsharpOriginal size={"32"} />
+                    </LiElement>
+                    <LiElement setLanguage={setLanguage} language={"rust"}>
+                        <RustPlain size={"32"} />
+                    </LiElement>
 
-                <LiElement setLanguage={setLanguage} language={"go"}>
-                    <GoOriginal size={"32"} />
-                </LiElement>
-                <LiElement setLanguage={setLanguage} language={"java"}>
-                    <JavaOriginal size={"32"} />
-                </LiElement>
-                <LiElement setLanguage={setLanguage} language={"csharp"}>
-                    <CsharpOriginal size={"32"} />
-                </LiElement>
-                <LiElement setLanguage={setLanguage} language={"rust"}>
-                    <RustPlain size={"32"} />
-                </LiElement>
-
-            </ul>
+                </ul>
+            </div>
 
             <div
-                className=""
+                className="text-xs sm:text-sm lg:text-xs xl:text-base"
             >
                 <SyntaxHighlighter
                     language={language}

@@ -3,7 +3,6 @@ export type ProgrammingLanguageType =
     | "cpp"
     | 'typescript'
     | 'javascript'
-    | 'go'
     | 'java'
     | 'csharp'
     | 'python'
