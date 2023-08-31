@@ -24,8 +24,8 @@ const AnimatedNavbar = () => {
 
     return (
         <>
-            <motion.div
-                className="fixed top-0 w-full bg-slate-700 text-white"
+            <motion.header
+                className="fixed top-0 w-full bg-slate-700 z-10"
 
                 initial={{ opacity: 0 }}
 
@@ -36,13 +36,20 @@ const AnimatedNavbar = () => {
                 onMouseEnter={handleOnMouseEnter}
                 onMouseLeave={handleOnMouseLeave}
             >
-                <motion.nav className="flex justify-center p-4 text-slate-700"
+                <div
+                    className='absolute h-12 py-4 p-1 text-white'
+                >
+                    <h1>
+                        Sorting Visualizer
+                    </h1>
+                </div>
+                <motion.nav className="flex justify-center items-center p-4 "
                     animate={{
                         scale: isNavbarOn ? 1 : 0.5,
                         y: isNavbarOn ? '0%' : "-100%"
                     }}
                 >
-                    <select className="flex space-x-4 px-2 p-1 rounded-2xl"
+                    <select className="flex space-x-4 px-2 p-1 rounded-lg"
                         onChange={(e) => handleAlgoChange(e.target.value)}
                         value={sortingAlgo}
                         disabled={!isNavbarOn}
@@ -52,7 +59,7 @@ const AnimatedNavbar = () => {
                         <option value="mergeSort">MergeSort</option>
                     </select>
                 </motion.nav>
-            </motion.div>
+            </motion.header>
 
         </>
     );

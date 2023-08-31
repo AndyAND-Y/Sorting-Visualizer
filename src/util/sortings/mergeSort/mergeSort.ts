@@ -1,6 +1,6 @@
 import { Animation } from "@/types/Animation";
-import compareAnimation from "../array/compare";
-import overwriteAnimation from "../array/overwrite";
+import compareAnimation from "../../array/compare";
+import overwriteAnimation from "../../array/overwrite";
 
 export default function mergeSort(toSortArr: number[]) {
 

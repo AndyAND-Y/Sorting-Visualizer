@@ -67,12 +67,15 @@ function ComplexityO1() {
 
 function getComplexity(complexity: string) {
     if (complexity === "O(n)") return <ComplexityOn />
+    if (complexity === "O(1)") return <ComplexityO1 />
+    if (complexity === "O(n^2)") return <ComplexityOn2 />
+    if (complexity === "O(nlogn)") return <ComplexityOnlgn />
 }
 
 function TextSection() {
     const [sorting] = useSelectSortingAlgo();
 
-    const worstComplexity = "O(n)"
+    const { worstCase, averageCase, auxiliarySpace } = SelectorSortingAlgorithms.getComplexities(sorting);
 
     return (<>
         <div className="">
@@ -83,18 +86,18 @@ function TextSection() {
                     <div className="flex justify-center flex-col">
                         <p>Worst</p>
                         <p>Time:</p>
-                        {getComplexity(worstComplexity)}
+                        {getComplexity(worstCase)}
                     </div>
                     <div className="flex justify-center flex-col">
                         <p>Average</p>
                         <p>Time:</p>
-                        {getComplexity(worstComplexity)}
+                        {getComplexity(averageCase)}
                     </div>
 
                     <div className="flex justify-center flex-col">
                         <p>Auxiliary</p>
                         <p>Space:</p>
-                        {getComplexity(worstComplexity)}
+                        {getComplexity(auxiliarySpace)}
                     </div>
                 </ul>
             </div>
@@ -121,10 +124,10 @@ function TextSection() {
                             {el.slice(4) + " "}
                         </>)
                     }
-                    if (el.toLocaleLowerCase().startsWith("o(nlgn)")) {
+                    if (el.toLocaleLowerCase().startsWith("o(nlogn)")) {
                         return (<>
                             <ComplexityOnlgn key={index} />
-                            {el.slice(7) + " "}
+                            {el.slice(8) + " "}
                         </>)
                     }
 

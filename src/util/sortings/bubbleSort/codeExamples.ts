@@ -118,34 +118,6 @@ const codeExampleBubbleSort = {
   }
   `,
 
-    go: `
-  package main
-  
-  import "fmt"
-  
-  func bubbleSort(arr []int) {
-    var swapped bool
-    for {
-      swapped = false
-      for i := 1; i < len(arr); i++ {
-        if arr[i-1] > arr[i] {
-          swapped = true
-          arr[i-1], arr[i] = arr[i], arr[i-1]
-        }
-      }
-      if !swapped {
-        break
-      }
-    }
-  }
-  
-  func main() {
-    arr := []int{5, 3, 8, 2, 1, 4}
-    bubbleSort(arr)
-    fmt.Println(arr)
-  }
-  `,
-
     rust: `
   fn bubble_sort(arr: &mut [i32]) {
     let mut swapped;
@@ -163,11 +135,6 @@ const codeExampleBubbleSort = {
     }
   }
   
-  fn main() {
-    let mut arr = vec![5, 3, 8, 2, 1, 4];
-    bubble_sort(&mut arr);
-    println!("{:?}", arr);
-  }
   `,
 } as const;
 
