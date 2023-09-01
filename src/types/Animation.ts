@@ -1,6 +1,5 @@
 export type Animation = {
     array: number[],
-    comparison: number,
 } & (
         {
             type: 'swap',

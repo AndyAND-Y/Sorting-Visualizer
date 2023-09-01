@@ -71,7 +71,7 @@ export default function SortingVisualizer() {
         setPlayPosition(0);
 
         const timeoutId = setTimeout(() => {
-            animationsRef.current = [{ type: "default", array: newArray, comparison: 0 }, ...SelectorSortingAlgorithms.getSortFunction(sortingAlgo)(newArray)];
+            animationsRef.current = [{ type: "default", array: newArray }, ...SelectorSortingAlgorithms.getSortFunction(sortingAlgo)(newArray)];
             setAnimationsLength(animationsRef.current.length);
         }, 400);
 
