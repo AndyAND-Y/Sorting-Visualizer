@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import useSelectSortingAlgo from '@/util/hooks/useSelectSortingAlgo';
 import { SortingAlgoType } from '@/types/SortingType';
@@ -8,6 +8,7 @@ import { SortingAlgoType } from '@/types/SortingType';
 const AnimatedNavbar = () => {
 
     const [isNavbarOn, setIsNavbarOn] = useState(true);
+
     const [sortingAlgo, setSortingAlgo] = useSelectSortingAlgo();
 
     const handleOnMouseEnter = () => {
@@ -21,6 +22,26 @@ const AnimatedNavbar = () => {
     const handleAlgoChange = (newAlgo: string) => {
         setSortingAlgo(newAlgo as SortingAlgoType);
     }
+
+    useEffect(() => {
+
+        const handleScroll = () => {
+            if (window.scrollY === 0) {
+                setIsNavbarOn(true);
+
+            }
+            else {
+                setIsNavbarOn(false);
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
+
+    }, [])
 
     return (
         <>

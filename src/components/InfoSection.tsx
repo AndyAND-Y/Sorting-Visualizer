@@ -16,7 +16,7 @@ export default function InfoSection() {
 
     return (
         <>
-            <div className="flex justify-center items-center my-16 mx-2">
+            <div className="flex justify-center items-center sm:my-2 sm:mb-8 my-20 mx-2">
 
                 <div
                     className="w-2/3 grid lg:grid-cols-2 gap-12 grid-cols-1"
@@ -80,25 +80,43 @@ function TextSection() {
     return (<>
         <div className="">
 
-            <div className="flex justify-center">
+            <div className="flex justify-center px-2 py-4">
                 <ul className="grid w-full sm:grid-cols-3 grid-cols-1 justify-center text-center gap-4 p-1 text-xl">
 
-                    <div className="flex justify-center flex-col">
+                    <motion.div
+
+                        initial={{ opacity: 0, y: "-100%", scale: 0 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1, transition: { delay: 0, duration: 0.5 } }}
+                        viewport={{ once: true }}
+                        className="flex justify-center p-2 flex-col rounded-lg bg-white shadow-lg shadow-blue-500"
+                    >
                         <p>Worst</p>
                         <p>Time:</p>
                         {getComplexity(worstCase)}
-                    </div>
-                    <div className="flex justify-center flex-col">
+                    </motion.div>
+                    <motion.div
+
+                        initial={{ opacity: 0, y: "-100%", scale: 0 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1, transition: { delay: 0.3, duration: 0.5 } }}
+                        viewport={{ once: true }}
+                        className="flex justify-center p-2 flex-col rounded-lg bg-white shadow-lg shadow-blue-500"
+                    >
                         <p>Average</p>
                         <p>Time:</p>
                         {getComplexity(averageCase)}
-                    </div>
+                    </motion.div>
 
-                    <div className="flex justify-center flex-col">
+                    <motion.div
+
+                        initial={{ opacity: 0, y: "-100%", scale: 0 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1, transition: { delay: 0.6, duration: 0.5 } }}
+                        viewport={{ once: true }}
+                        className="flex justify-center p-2 flex-col rounded-lg bg-white shadow-lg shadow-blue-500"
+                    >
                         <p>Auxiliary</p>
                         <p>Space:</p>
                         {getComplexity(auxiliarySpace)}
-                    </div>
+                    </motion.div>
                 </ul>
             </div>
 
@@ -149,7 +167,7 @@ function CodeSection() {
 
     return (<>
 
-        <div className="">
+        <div className="bg-white">
 
             <div className="flex justify-center">
                 <ul className="grid w-full sm:grid-cols-8 grid-cols-4 justify-center text-center border-b border-gray-700 gap-4 p-1">

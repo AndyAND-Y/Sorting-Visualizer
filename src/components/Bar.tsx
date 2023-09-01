@@ -1,4 +1,5 @@
 import { Animation } from "@/types/Animation";
+import { motion } from "framer-motion";
 
 export default function Bar({ value, type, state }: { value: number, type: "sm" | "md", state: Animation['type'] }) {
 
@@ -21,16 +22,18 @@ export default function Bar({ value, type, state }: { value: number, type: "sm" 
 
     return (<>
 
-        <div
+        <motion.div
             className={`${type === "md" ? "m-1" : "m-[1px]"} flex items-end ${getColor(state)} ${type === "md" ? "w-4" : "w-1"}`}
-            style={{ height: `${value}%` }}
+            initial={{ height: "0%" }}
+            animate={{ height: `${value}%`, transition: { duration: 0.1 } }}
+            whileTap={{ scale: 0.9 }}
         >
             {
                 type === "md" && <p
                     className="bg-white w-6 text-center"
                 >{value}</p>
             }
-        </div>
+        </motion.div >
 
 
     </>)

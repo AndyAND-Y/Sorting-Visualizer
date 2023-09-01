@@ -4,7 +4,7 @@ type Range = {
     high: number,
 }
 
-export default function generateArray(size: number, range: Range = { low: 5, high: 100 }) {
+export default function generateArray(size: number, range: Range = { low: 10, high: 100 }) {
 
     const arr = [];
     for (let i = 0; i < size; ++i) {

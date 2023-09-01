@@ -25,7 +25,13 @@ export default function RootLayout({
                 <meta name="theme-color" content="#ffffff" />
 
             </head>
-            <body className={inter.className}>{children}</body>
+            <body className={inter.className}>
+                <div
+                    className='-z-10 bg-blue-100'
+                >
+                    {children}
+                </div>
+            </body>
         </html>
     )
 }

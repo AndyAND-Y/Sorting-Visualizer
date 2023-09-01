@@ -35,38 +35,39 @@ function mergeSortMerger(arr: number[], start: number, mid: number, end: number,
 
     while (i <= mid && j <= end) {
 
-        compareAnimation(animations, i, j);
+        compareAnimation(animations, i, j, arr);
         if (arr[i] < arr[j]) {
-            overwriteAnimation(animations, k, arr[i]);
             tmp[k] = arr[i];
             i++;
             k++;
+            //overwriteAnimation(animations, k, arr[i], tmp);
         }
         else {
-            overwriteAnimation(animations, k, arr[j]);
             tmp[k] = arr[j];
             j++;
             k++;
+            //overwriteAnimation(animations, k, arr[j], tmp);
         }
     }
 
     while (i <= mid) {
-        overwriteAnimation(animations, k, arr[i]);
+
         tmp[k] = arr[i];
         i++;
         k++;
+        //overwriteAnimation(animations, k, arr[i], tmp);
     }
 
     while (j <= end) {
-        overwriteAnimation(animations, k, arr[j]);
         tmp[k] = arr[j];
         j++;
         k++;
-
+        //overwriteAnimation(animations, k, arr[j], tmp);
     }
 
     for (let k = start; k <= end; ++k) {
         arr[k] = tmp[k];
+        overwriteAnimation(animations, k, arr[k], arr);
     }
 
 }

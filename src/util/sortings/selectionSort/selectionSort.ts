@@ -7,10 +7,10 @@ export default function selectionSort(toSortArr: number[]) {
     const animations: Animation[] = [];
     for (let i = 0; i < arr.length; ++i) {
         for (let j = i + 1; j < arr.length; ++j) {
-            compareAnimation(animations, i, j);
+            compareAnimation(animations, i, j, arr);
             if (arr[i] > arr[j]) {
-                swapAnimation(animations, i, j);
                 [arr[i], arr[j]] = [arr[j], arr[i]];
+                swapAnimation(animations, i, j, arr);
             }
         }
     }

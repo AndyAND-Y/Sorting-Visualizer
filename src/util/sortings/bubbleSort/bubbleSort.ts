@@ -11,11 +11,11 @@ export default function bubbleSort(toSortArr: number[]) {
     do {
         swapped = false;
         for (let i = 1; i < arr.length; ++i) {
-            compareAnimation(animations, i, i - 1);
+            compareAnimation(animations, i, i - 1, arr);
             if (arr[i - 1] > arr[i]) {
                 swapped = true;
-                swapAnimation(animations, i, i - 1);
                 [arr[i - 1], arr[i]] = [arr[i], arr[i - 1]];
+                swapAnimation(animations, i, i - 1, arr);
             }
         }
     } while (swapped === true)
