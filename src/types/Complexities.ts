@@ -4,4 +4,4 @@ export type Complexities = {
     auxiliarySpace: Complexity,
 }
 
-type Complexity = "O(n)" | "O(1)" | "O(n^2)" | "O(nlogn)";
+export type Complexity = "O(n)" | "O(1)" | "O(n^2)" | "O(nlogn)";

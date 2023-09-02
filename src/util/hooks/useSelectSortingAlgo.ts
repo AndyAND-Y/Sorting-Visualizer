@@ -1,4 +1,3 @@
-import { useEffect, useState, } from 'react';
 import { SortingAlgoType } from '@/types/SortingType';
 import { useSelectorSortAlgoStore } from '../state/sortingAlgoState';
 

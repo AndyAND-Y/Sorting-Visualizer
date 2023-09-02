@@ -75,8 +75,8 @@ const AnimatedNavbar = () => {
                         value={sortingAlgo}
                         disabled={!isNavbarOn}
                     >
-                        <option value="bubbleSort" >BubbleSort</option>
-                        <option value="selectionSort">SelectionSort</option>
+                        <option value="bubbleSort" >Bubble Sort</option>
+                        <option value="selectionSort">Selection Sort</option>
                         <option value="mergeSort">MergeSort</option>
                     </select>
                 </motion.nav>

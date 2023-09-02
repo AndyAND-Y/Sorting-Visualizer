@@ -1,6 +1,6 @@
 import { SortingAlgoType } from '@/types/SortingType'
 import { create } from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
+import { createJSONStorage, devtools, persist } from 'zustand/middleware'
 
 interface SelectorSortAlgoState {
     sortingAlgo: SortingAlgoType
@@ -8,8 +8,14 @@ interface SelectorSortAlgoState {
 }
 
 export const useSelectorSortAlgoStore = create<SelectorSortAlgoState>()(
-    (set) => ({
-        sortingAlgo: "bubbleSort",
-        change: (newAlgo) => set({ sortingAlgo: newAlgo }),
-    })
+    persist(
+        (set) => ({
+            sortingAlgo: "bubbleSort",
+            change: (newAlgo) => set({ sortingAlgo: newAlgo }),
+        }),
+        {
+            name: 'sorting-store',
+            storage: createJSONStorage(() => localStorage),
+        }
+    )
 )

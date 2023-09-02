@@ -9,6 +9,7 @@ import SelectorSortingAlgorithms from "@/util/sortings/sortSelector";
 import Balancer from "react-wrap-balancer";
 import { FaPlay, FaStop } from "react-icons/fa";
 import { motion } from "framer-motion";
+import useLoadingState from "@/util/hooks/useLoadingState";
 
 const defaultAnimationSpeed = 200;
 
@@ -18,10 +19,10 @@ const barSizes = {
 } as const;
 
 const animationSpeedFunction = (x: number) => {
-    if (x < 3) {
+    if (x <= 1) {
         return Number(Math.pow(1.5, x).toFixed(1));
     }
-    return Number((Math.pow(1.5, x) + (x - 3) * Math.pow(1.5, x / 2)).toFixed(0));
+    return Number((1.5 * x).toFixed(1));
 }
 
 
@@ -30,10 +31,7 @@ const nicerNumber = (x: number) => {
     return Math.floor(Math.floor(x) / 5) * 5;
 }
 
-
 export default function SortingVisualizer() {
-
-    const [pageLoading, setPageLoading] = useState(true);
 
     const [arraySize, setArraySize] = useState<number>(20);
     const [arr, setArr] = useState<number[]>([]);
@@ -42,7 +40,6 @@ export default function SortingVisualizer() {
     const [overwriteArr, setOverwriteArr] = useState<boolean[]>([]);
 
     const [speedView, setSpeedView] = useState("0");
-    const [numberOfComparison, setNumberOfComparison] = useState(0);
 
     const [playPosition, setPlayPosition] = useState(0);
 
@@ -51,15 +48,17 @@ export default function SortingVisualizer() {
     const [isPlaying, setIsPlaying] = useState(false);
     const isPlayingRef = useRef(false);
 
-    const dateRef = useRef(Date.now());
     const animationSpeed = useRef(defaultAnimationSpeed / 2);
     const animationsRef = useRef<Animation[]>([]);
     const windowRef = useRef<Window | null>(null);
 
     const [sortingAlgo] = useSelectSortingAlgo();
+    const [isLoading, setIsLoading] = useLoadingState();
 
     useEffect(() => {
-        setPageLoading(true);
+
+        setIsLoading(true);
+
         const newArray = generateArray(arraySize)
         setArr(newArray);
         setSwapArr(getAnimationStateArray(newArray.length, -1, -1));
@@ -67,7 +66,6 @@ export default function SortingVisualizer() {
         setOverwriteArr(getAnimationStateArray(newArray.length, -1, -1));
         isPlayingRef.current = false;
         setIsPlaying(false);
-        setNumberOfComparison(0);
         setPlayPosition(0);
 
         const timeoutId = setTimeout(() => {
@@ -75,7 +73,7 @@ export default function SortingVisualizer() {
             setAnimationsLength(animationsRef.current.length);
         }, 400);
 
-        setPageLoading(false);
+        setIsLoading(false);
 
         return () => {
             clearTimeout(timeoutId);
@@ -86,9 +84,16 @@ export default function SortingVisualizer() {
     useEffect(() => {
         windowRef.current = window;
         setArraySize(nicerNumber((window.innerWidth - 100) / barSizes.medium));
-        setPageLoading(false);
+        setIsLoading(false);
     }, [])
 
+
+    const getNumberOfComparisons = (index: number) => {
+        const animations = animationsRef.current;
+        return animations.slice(0, index).filter((animation: Animation) => {
+            return animation.type === "comp";
+        }).length;
+    }
 
     const getState = (index: number): Animation['type'] => {
         if (swapArr[index]) return "swap";
@@ -116,7 +121,6 @@ export default function SortingVisualizer() {
         if (animation.type === "comp") {
             setCompArr(getAnimationStateArray(animation.array.length, animation.i, animation.j));
             setArr([...animation.array]);
-            setNumberOfComparison((prev) => prev + 1);
         }
         else if (animation.type === "swap") {
             setSwapArr(getAnimationStateArray(animation.array.length, animation.i, animation.j));
@@ -139,21 +143,13 @@ export default function SortingVisualizer() {
 
         const animations = animationsRef.current;
 
-        if (animations.length <= indexStart) {
+        if (animations.length < indexStart) {
             setSwapArr(getAnimationStateArray(arr.length, -1, -1));
             setCompArr(getAnimationStateArray(arr.length, -1, -1));
             setOverwriteArr(getAnimationStateArray(arr.length, -1, -1));
             isPlayingRef.current = false;
             setIsPlaying(false);
             setPlayPosition(indexStart);
-            const d = Date.now();
-
-            console.log(d);
-            console.log(Math.abs(d - dateRef.current));
-
-            console.log("\n");
-
-            console.log(animationsLength);
 
             return;
         }
@@ -172,8 +168,6 @@ export default function SortingVisualizer() {
 
     const handlePlayBtn = () => {
 
-        dateRef.current = Date.now();
-        console.log(dateRef.current);
         if (isPlayingRef.current) {
             isPlayingRef.current = false;
             setIsPlaying(false);
@@ -187,7 +181,14 @@ export default function SortingVisualizer() {
 
     const handlePointer = (e: ChangeEvent<HTMLInputElement>) => {
 
-        const newPosition = Math.floor(e.target.valueAsNumber);
+        let newPosition = Math.floor(e.target.valueAsNumber);
+
+        console.log(newPosition);
+
+        if (animationsLength - newPosition <= animationsLength / 100 * 1 && newPosition > playPosition) {
+            newPosition = animationsLength - 1;
+        }
+
         setPlayPosition(newPosition);
         animatePlayer(newPosition);
         isPlayingRef.current = false;
@@ -201,15 +202,14 @@ export default function SortingVisualizer() {
         setPlayPosition(0);
     }
 
-    if (pageLoading) {
-        return <div
-            className="animate-spin"
-        >
-            <ClipLoader
-                color={"#3b82f6"}
-                size={48}
-            />
-        </div>
+    if (isLoading) {
+        return (<>
+            <div className="h-screen w-screen flex justify-center items-center">
+                <div className="animate-spin">
+                    <ClipLoader size={48} />
+                </div>
+            </div>
+        </>)
     }
 
     return (<>
@@ -245,19 +245,19 @@ export default function SortingVisualizer() {
                         }
                     </motion.button>
 
-                    <div className="lg:w-[512px] sm:w-[128px] md:w-[256px]  h-5 bg-white rounded-full relative">
+                    <div className="lg:w-[512px] sm:w-[128px] md:w-[256px] h-5 bg-white relative rounded-full">
 
                         <div
-                            className="h-full bg-blue-500 rounded-full absolute left-0 shadow-xl shadow-blue-500"
+                            className="h-full rounded-full bg-blue-500  absolute left-0 shadow-xl shadow-blue-500"
                             style={{ width: `${(playPosition / (animationsLength) * 100)}%` }}
                         ></div>
                         <input
                             type="range"
-                            min={0}
+                            min={1}
                             max={animationsLength}
                             value={playPosition}
                             onChange={handlePointer}
-                            className="w-full h-full opacity-0 cursor-pointer"
+                            className="lg:w-[512px] sm:w-[128px] md:w-[256px] h-full opacity-0 cursor-pointer"
                         />
                     </div>
                 </div>
@@ -282,18 +282,19 @@ export default function SortingVisualizer() {
 
                     </div>
                     <div className="flex justify-center">
-                        <div className="flex bg-white flex-col w-28 justify-center items-center border border-blue-500 p-2 rounded-xl transition-all hover:bg-slate-100 hover:shadow-md hover:shadow-blue-500">
+                        <div className="flex bg-white flex-col w-32 justify-center items-center border border-blue-500 p-2 rounded-xl transition-all hover:bg-slate-100 hover:shadow-md hover:shadow-blue-500">
                             <input
                                 className="w-20"
                                 type="range"
                                 min={-3}
-                                max={5}
+                                max={6.66667}
                                 value={speedView}
                                 step={"any"}
                                 onChange={(e) => {
                                     const speed = Number(e.target.value);
                                     animationSpeed.current = Math.floor(defaultAnimationSpeed / animationSpeedFunction(speed));
                                     console.log(animationSpeed.current);
+                                    console.log(animationSpeedFunction(speed));
                                     setSpeedView(e.target.value);
                                 }}
 
@@ -328,10 +329,10 @@ export default function SortingVisualizer() {
                         <motion.div
                             whileHover={{ scale: 0.9 }}
                             whileTap={{ scale: 1.05 }}
-                            className="text-lg p-2 m-2 shadow-md shadow-blue-500 border-b border-blue-500 w-48 rounded-3xl text-center bg-white"
+                            className="text-lg p-2 m-2 shadow-md shadow-blue-500 border-b border-blue-500 w-52 rounded-3xl text-center bg-white"
                         >
                             Comparison:
-                            {numberOfComparison}
+                            {getNumberOfComparisons(playPosition)}
                         </motion.div>
                         <span
                             className="absolute bottom-16 p-4 w-64 transition-all scale-0 bg-white border-b border-blue-500 group-hover:scale-100 rounded-xl shadow-blue-500 shadow-lg"
@@ -347,7 +348,7 @@ export default function SortingVisualizer() {
                         <motion.div
                             whileHover={{ scale: 0.9 }}
                             whileTap={{ scale: 1.05 }}
-                            className="text-lg p-2 m-2 shadow-md shadow-blue-500 border-b border-blue-500 w-48 rounded-3xl text-center bg-white"
+                            className="text-lg p-2 m-2 shadow-md shadow-blue-500 border-b border-blue-500 w-52 rounded-3xl text-center bg-white"
                         >
                             Time:
                             {(playPosition * (Math.floor(defaultAnimationSpeed / animationSpeedFunction(Number(speedView)))) / 1000).toFixed(2)}s
