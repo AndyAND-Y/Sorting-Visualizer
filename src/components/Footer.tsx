@@ -1,14 +1,14 @@
 export default function Footer() {
     return (<>
 
-        <footer className="bg-slate-700 py-4 pb-8">
+        <footer className="bg-slate-700 dark:bg-slate-900 py-4 pb-8 border-t-2 border-blue-500">
 
             <ul
                 className="flex justify-center items-center gap-6"
             >
                 <a
                     href={"https://github.com/AndyAND-Y/sorting-algos"}
-                    className="text-white hover:text-gray-400"
+                    className="text-slate-700 hover:text-slate-800 dark:text-white bg-white dark:bg-slate-700 p-2 rounded-full"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +21,7 @@ export default function Footer() {
                 </a>
                 <a
                     href={""}
-                    className="text-white hover:text-gray-400"
+                    className="text-slate-700 hover:text-slate-800 dark:text-white bg-white dark:bg-slate-700 p-2 rounded-full"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +34,7 @@ export default function Footer() {
                 </a>
                 <a
                     href={""}
-                    className="text-white hover:text-gray-400"
+                    className="text-slate-700 hover:text-slate-800 dark:text-white bg-white dark:bg-slate-700 p-2 rounded-full"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

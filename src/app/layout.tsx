@@ -1,10 +1,11 @@
 import './globals.css'
-import { Space_Mono } from 'next/font/google'
+import { Space_Grotesk } from 'next/font/google'
 
-const inter = Space_Mono({
-    subsets: ["latin"],
-    weight: ["400", "700"]
+const inter = Space_Grotesk({
+    subsets: ['latin'],
+    weight: ["400"]
 })
+
 
 export const metadata = {
     title: 'Sorting Visualizer',
@@ -30,7 +31,7 @@ export default function RootLayout({
             </head>
             <body className={inter.className}>
                 <div
-                    className='-z-10 bg-blue-100'
+                    className='-z-10 bg-blue-100 dark:bg-slate-800'
                 >
                     {children}
                 </div>

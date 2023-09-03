@@ -3,20 +3,20 @@ import { motion } from "framer-motion";
 
 export default function Bar({ value, type, state }: { value: number, type: "sm" | "md", state: Animation['type'] }) {
 
-    const colors = ["bg-red-500", "bg-slate-700", "bg-cyan-500", "bg-amber-500"];
+    const colors = ["bg-red-500 dark:bg-red-500", "bg-slate-700 dark:bg-slate-900", "bg-cyan-500", "bg-amber-500"];
 
     const getColor = (state: Animation['type']) => {
         if (state === "default") {
-            return "bg-slate-700";
+            return colors[1];
         }
         else if (state === "comp") {
-            return "bg-cyan-500";
+            return colors[2];
         }
         else if (state === "swap") {
-            return "bg-red-500";
+            return colors[0];
         }
         else if (state === "overwrite") {
-            return "bg-amber-500"
+            return colors[3];
         }
     }
 
@@ -30,7 +30,7 @@ export default function Bar({ value, type, state }: { value: number, type: "sm" 
         >
             {
                 type === "md" && <p
-                    className="bg-white w-6 text-center"
+                    className="bg-white dark:bg-slate-400  text-slate-700 dark:text-white w-6 text-center"
                 >{value}</p>
             }
         </motion.div >

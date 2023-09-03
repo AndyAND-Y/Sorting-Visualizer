@@ -3,13 +3,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import useSelectSortingAlgo from '@/util/hooks/useSelectSortingAlgo';
 import { SortingAlgoType } from '@/types/SortingType';
+import useColorMode from '@/util/hooks/useColorMode';
 
+import { BsMoon, BsSun } from "react-icons/bs";
 
 const AnimatedNavbar = () => {
 
     const [isNavbarOn, setIsNavbarOn] = useState(true);
 
     const [sortingAlgo, setSortingAlgo] = useSelectSortingAlgo();
+    const [colorTheme, setTheme] = useColorMode();
 
     const handleOnMouseEnter = () => {
         setIsNavbarOn(true);
@@ -28,7 +31,6 @@ const AnimatedNavbar = () => {
         const handleScroll = () => {
             if (window.scrollY === 0) {
                 setIsNavbarOn(true);
-
             }
             else {
                 setIsNavbarOn(false);
@@ -46,7 +48,7 @@ const AnimatedNavbar = () => {
     return (
         <>
             <motion.header
-                className="fixed top-0 w-full bg-slate-700 z-10"
+                className="fixed flex justify-center top-0 w-full bg-slate-700 z-10 dark:bg-slate-900 border-b-2 border-blue-500 shadow-lg"
 
                 initial={{ opacity: 0 }}
 
@@ -58,28 +60,50 @@ const AnimatedNavbar = () => {
                 onMouseLeave={handleOnMouseLeave}
             >
                 <div
-                    className='absolute h-12 py-4 p-1 text-white'
+                    className='flex justify-between w-11/12 h-full items-center p-2'
                 >
-                    <h1>
-                        Sorting Visualizer
-                    </h1>
-                </div>
-                <motion.nav className="flex justify-center items-center p-4 "
-                    animate={{
-                        scale: isNavbarOn ? 1 : 0.5,
-                        y: isNavbarOn ? '0%' : "-100%"
-                    }}
-                >
-                    <select className="flex space-x-4 px-2 p-1 rounded-lg"
-                        onChange={(e) => handleAlgoChange(e.target.value)}
-                        value={sortingAlgo}
-                        disabled={!isNavbarOn}
+                    <div
+                        className='p-2 font-bold text-center text-slate-700 dark:text-white bg-white dark:bg-slate-700 rounded-xl'
                     >
-                        <option value="bubbleSort" >Bubble Sort</option>
-                        <option value="selectionSort">Selection Sort</option>
-                        <option value="mergeSort">MergeSort</option>
-                    </select>
-                </motion.nav>
+                        <h1 className=''>
+                            Sorting
+                        </h1>
+                        <h1>
+                            Visualizer
+                        </h1>
+                    </div>
+                    <motion.nav
+                        className="flex font-bold justify-center items-center p-4"
+                        animate={{
+                            scale: isNavbarOn ? 1 : 0.5,
+                            y: isNavbarOn ? '0%' : "-100%"
+                        }}
+                    >
+                        <select
+                            className="flex px-2 p-1 rounded-lg bg-white text-slate-700 dark:bg-slate-700 dark:text-white"
+                            onChange={(e) => handleAlgoChange(e.target.value)}
+                            value={sortingAlgo}
+                            disabled={!isNavbarOn}
+                        >
+                            <option value="bubbleSort" className='font-bold'>Bubble Sort</option>
+                            <option value="selectionSort" className='font-bold'>Selection Sort</option>
+                            <option value="mergeSort" className='font-bold'>MergeSort</option>
+                        </select>
+                    </motion.nav>
+                    <motion.button
+                        className='flex justify-center items-center w-12 h-12 rounded-full text-slate-700 dark:text-white bg-white dark:bg-slate-700'
+                        onClick={() => { setTheme(colorTheme === 'dark' ? 'light' : 'dark') }}
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.5 }}
+                    >
+                        {
+                            colorTheme === 'light' ?
+                                <BsSun size={28} /> :
+                                <BsMoon size={28} />
+                        }
+                    </motion.button>
+                </div>
+
             </motion.header>
 
         </>
