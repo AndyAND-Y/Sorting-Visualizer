@@ -214,7 +214,7 @@ export default function SortingVisualizer() {
 
     return (<>
         <div className="h-full">
-            <div className="flex bg-white dark:bg-slate-400 justify-center h-[66vh] items-end p-6 overflow-auto m-4  border border-slate-700 shadow-xl rounded-3xl">
+            <div className="flex bg-white dark:bg-slate-500 justify-center h-[66vh] items-end p-6 overflow-auto m-4  border border-slate-700 shadow-xl rounded-3xl">
                 {arr.map((el, index) => {
                     return (
                         <Bar
@@ -232,7 +232,7 @@ export default function SortingVisualizer() {
 
 
                     <motion.button
-                        className="h-8 w-8 bg-white dark:bg-slate-400 p-2 rounded-full"
+                        className="h-8 w-8 bg-white dark:bg-slate-500 p-2 rounded-full"
                         onClick={handlePlayBtn}
 
                         whileHover={{ scale: 1.3 }}
@@ -245,7 +245,7 @@ export default function SortingVisualizer() {
                         }
                     </motion.button>
 
-                    <div className="lg:w-[512px] sm:w-[128px] md:w-[256px] h-5 bg-white dark:bg-slate-400 relative rounded-full">
+                    <div className="lg:w-[512px] sm:w-[128px] md:w-[256px] h-5 bg-white dark:bg-slate-500 relative rounded-full">
 
                         <div
                             className="h-full rounded-full bg-blue-500  absolute left-0 shadow-xl shadow-blue-500"
@@ -265,12 +265,12 @@ export default function SortingVisualizer() {
                     <div className="flex justify-center">
                         {!isPlaying ?
                             <button
-                                className="border border-blue-500 text-slate-700 dark:text-white  bg-white dark:bg-slate-400 w-28 p-2 rounded-xl transition-all hover:bg-slate-100 dark:hover:bg-slate-500 hover:shadow-md hover:shadow-blue-500"
+                                className="border border-blue-500 text-slate-700 dark:text-white  bg-white dark:bg-slate-500 w-28 p-2 rounded-xl transition-all hover:bg-slate-100 dark:hover:bg-slate-500 hover:shadow-md hover:shadow-blue-500"
                                 onClick={handleGenerateBtn}
                             >Generate!</button>
                             :
                             <button
-                                className="flex justify-center items-center border border-blue-500 text-slate-700 dark:text-white  bg-white dark:bg-slate-400 w-28 p-2 rounded-xl transition-all hover:bg-slate-100 dark:hover:bg-slate-500 hover:shadow-md hover:shadow-blue-500"
+                                className="flex justify-center items-center border border-blue-500 text-slate-700 dark:text-white  bg-white dark:bg-slate-500 w-28 p-2 rounded-xl transition-all hover:bg-slate-100 dark:hover:bg-slate-500 hover:shadow-md hover:shadow-blue-500"
                             >
                                 <p className="p-1">Sorting
                                 </p>
@@ -282,7 +282,7 @@ export default function SortingVisualizer() {
 
                     </div>
                     <div className="flex justify-center">
-                        <div className="flex bg-white dark:bg-slate-400 text-slate-700 dark:text-white flex-col w-32 justify-center items-center border border-blue-500 p-2 rounded-xl transition-all hover:bg-slate-100 dark:hover:bg-slate-500 hover:shadow-md hover:shadow-blue-500">
+                        <div className="flex bg-white dark:bg-slate-500 text-slate-700 dark:text-white flex-col w-32 justify-center items-center border border-blue-500 p-2 rounded-xl transition-all hover:bg-slate-100 dark:hover:bg-slate-500 hover:shadow-md hover:shadow-blue-500">
                             <input
                                 className="w-20"
                                 type="range"
@@ -303,7 +303,7 @@ export default function SortingVisualizer() {
                         </div>
                     </div>
                     <div className="flex justify-center">
-                        <div className="flex bg-white dark:bg-slate-400 text-slate-700 dark:text-white w-28 flex-col justify-center items-center border border-blue-500 p-2 rounded-xl transition-all hover:bg-slate-100 dark:hover:bg-slate-500 hover:shadow-md hover:shadow-blue-500">
+                        <div className="flex bg-white dark:bg-slate-500 text-slate-700 dark:text-white w-28 flex-col justify-center items-center border border-blue-500 p-2 rounded-xl transition-all hover:bg-slate-100 dark:hover:bg-slate-500 hover:shadow-md hover:shadow-blue-500">
                             <input
                                 className="w-20"
                                 type="range"
@@ -329,20 +329,20 @@ export default function SortingVisualizer() {
                         <motion.div
                             whileHover={{ scale: 0.9 }}
                             whileTap={{ scale: 1.05 }}
-                            className="text-lg p-2 m-2 shadow-md shadow-blue-500 border-b border-blue-500 w-52 rounded-3xl text-center bg-white dark:bg-slate-400"
+                            className="text-lg p-2 m-2 shadow-md shadow-blue-500 border-b border-blue-500 w-52 rounded-3xl text-center bg-white dark:bg-slate-500"
                         >
                             <span>
                                 Comparison:
                                 {getNumberOfComparisons(playPosition)}
                             </span>
                         </motion.div>
-                        <span
-                            className="absolute bottom-16 p-4 w-72 transition-all scale-0 bg-white dark:bg-slate-400 border-b border-blue-500 group-hover:scale-100 rounded-xl shadow-blue-500 shadow-lg"
+                        <p
+                            className="absolute bottom-16 p-4 w-72 transition-all scale-0 bg-white dark:bg-slate-500 border-b border-blue-500 group-hover:scale-100 rounded-xl shadow-blue-500 shadow-lg"
                         >
                             <Balancer>
                                 The number of comparison is a useful metric for comparing different sorting algorithms.
                             </Balancer>
-                        </span>
+                        </p>
                     </div>
                     <div
                         className="group relative flex justify-center dark:text-white text-slate-700"
@@ -350,20 +350,20 @@ export default function SortingVisualizer() {
                         <motion.div
                             whileHover={{ scale: 0.9 }}
                             whileTap={{ scale: 1.05 }}
-                            className="text-lg p-2 m-2 shadow-md shadow-blue-500 border-b border-blue-500 w-52 rounded-3xl text-center bg-white dark:bg-slate-400"
+                            className="text-lg p-2 m-2 shadow-md shadow-blue-500 border-b border-blue-500 w-52 rounded-3xl text-center bg-white dark:bg-slate-500"
                         >
                             <p>
                                 Time:
                                 {(playPosition * (Math.floor(defaultAnimationSpeed / animationSpeedFunction(Number(speedView)))) / 1000).toFixed(2)}s
                             </p>
                         </motion.div>
-                        <span
-                            className="absolute bottom-16 w-72 p-4 transition-all scale-0 bg-white dark:bg-slate-400 border-b border-blue-500 group-hover:scale-100 rounded-xl shadow-blue-500 shadow-lg"
+                        <p
+                            className="absolute bottom-16 w-72 p-4 transition-all scale-0 bg-white dark:bg-slate-500 border-b border-blue-500 group-hover:scale-100 rounded-xl shadow-blue-500 shadow-lg"
                         >
                             <Balancer>
                                 The time metric represents have many seconds are needed to get to this state of the array.
                             </Balancer>
-                        </span>
+                        </p>
                     </div>
 
                 </div>

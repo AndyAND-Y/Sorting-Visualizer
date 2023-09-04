@@ -9,7 +9,7 @@ interface ColorModeState {
 export const useColorModeStore = create<ColorModeState>()(
     persist(
         (set) => ({
-            theme: "dark",
+            theme: "light",
             change: (newTheme: "dark" | "light") => set({ theme: newTheme }),
         }),
         {
