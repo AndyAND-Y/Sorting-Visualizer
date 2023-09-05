@@ -1,4 +1,6 @@
-const codeExampleMergeSort = {
+import { ProgrammingLanguageType } from "@/types/Languages";
+
+const codeExampleMergeSort: { [k in ProgrammingLanguageType]: string } = {
     typescript: `
   function mergeSort(arr: number[]) {
     const tmp = [...arr];

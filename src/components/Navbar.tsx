@@ -10,7 +10,6 @@ import { BsMoon, BsSun } from "react-icons/bs";
 const AnimatedNavbar = () => {
 
     const [isNavbarOn, setIsNavbarOn] = useState(true);
-
     const [sortingAlgo, setSortingAlgo] = useSelectSortingAlgo();
     const [colorTheme, setTheme] = useColorMode();
 
@@ -85,9 +84,11 @@ const AnimatedNavbar = () => {
                             value={sortingAlgo}
                             disabled={!isNavbarOn}
                         >
+
                             <option value="bubbleSort" className='font-bold'>Bubble Sort</option>
                             <option value="selectionSort" className='font-bold'>Selection Sort</option>
                             <option value="mergeSort" className='font-bold'>MergeSort</option>
+                            <option value="quickSort" className='font-bold'>QuickSort</option>
                         </select>
                     </motion.nav>
                     <motion.button

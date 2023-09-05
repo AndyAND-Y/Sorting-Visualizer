@@ -1,5 +1,7 @@
+import { ProgrammingLanguageType } from "@/types/Languages";
+
 // translations.ts
-const codeExampleBubbleSort = {
+const codeExampleBubbleSort: { [k in ProgrammingLanguageType]: string } = {
     typescript: `
   function bubbleSort(arr: number[]) {
     let swapped: boolean;
@@ -136,6 +138,6 @@ const codeExampleBubbleSort = {
   }
   
   `,
-} as const;
+};
 
 export default codeExampleBubbleSort;

@@ -1,1 +1,7 @@
-export type SortingAlgoType = "bubbleSort" | "selectionSort" | "mergeSort";
+export type SortingAlgoType =
+    "bubbleSort" |
+    "selectionSort" |
+    "mergeSort" |
+    "quickSort" |
+
+    {} & null

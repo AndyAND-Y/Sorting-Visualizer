@@ -187,16 +187,20 @@ function TextSection() {
                 </ul>
             </div>
             <div className="flex justify-center w-full p-4 bg-white dark:bg-slate-500 text-slate-700 dark:text-white rounded-lg border border-blue-500 shadow-lg shadow-blue-500">
-                <Balancer>
-                    <article className="text-lg flex justify-center flex-col">
+
+                <article className="text-lg flex justify-center flex-col w-full">
+                    <Balancer
+                        className="w-full h-full"
+                    >
                         {ps.map((el, index) => {
 
-                            return <p className="p-1 m-1 leading-tight" key={index}>
+                            return (<>
                                 {convertText(el)}
-                            </p>
+                                {(index !== ps.length - 1) && <div> <br /> </div>}
+                            </>)
                         })}
-                    </article>
-                </Balancer>
+                    </Balancer>
+                </article>
             </div>
         </div >
     </>)

@@ -35,6 +35,7 @@ export default function SortingVisualizer() {
 
     const [arraySize, setArraySize] = useState<number>(20);
     const [arr, setArr] = useState<number[]>([]);
+
     const [swapArr, setSwapArr] = useState<boolean[]>([]);
     const [compArr, setCompArr] = useState<boolean[]>([]);
     const [overwriteArr, setOverwriteArr] = useState<boolean[]>([]);
@@ -50,7 +51,6 @@ export default function SortingVisualizer() {
 
     const animationSpeed = useRef(defaultAnimationSpeed / 2);
     const animationsRef = useRef<Animation[]>([]);
-    const windowRef = useRef<Window | null>(null);
 
     const [sortingAlgo] = useSelectSortingAlgo();
     const [isLoading, setIsLoading] = useLoadingState();
@@ -79,12 +79,41 @@ export default function SortingVisualizer() {
             clearTimeout(timeoutId);
         }
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [arraySize, sortingAlgo])
 
     useEffect(() => {
-        windowRef.current = window;
+        const handleResize = () => {
+
+            let timeoutId: NodeJS.Timeout | null = null;
+            const resize = () => {
+                if (timeoutId)
+                    clearTimeout(timeoutId);
+
+                timeoutId = setTimeout(() => {
+                    setArraySize(nicerNumber((window.innerWidth - 100) / barSizes.medium));
+                    // setIsLoading(false);
+                    timeoutId = null;
+                    console.log("resize");
+
+                }, 10);
+            }
+            resize();
+            // setIsLoading(true);
+
+        }
+
         setArraySize(nicerNumber((window.innerWidth - 100) / barSizes.medium));
+
+        window.addEventListener("resize", handleResize)
+
         setIsLoading(false);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
@@ -95,7 +124,7 @@ export default function SortingVisualizer() {
         }).length;
     }
 
-    const getState = (index: number): Animation['type'] => {
+    const getState = (index: number, swapArr: boolean[], compArr: boolean[], overwriteArr: boolean[]): Animation['type'] => {
         if (swapArr[index]) return "swap";
         if (compArr[index]) return "comp";
         if (overwriteArr[index]) return "overwrite";
@@ -164,6 +193,7 @@ export default function SortingVisualizer() {
 
     const getAnimations = (arr: number[]) => {
         animationsRef.current = SelectorSortingAlgorithms.getSortFunction(sortingAlgo)(arr);
+        setAnimationsLength(animationsRef.current.length);
     }
 
     const handlePlayBtn = () => {
@@ -199,7 +229,11 @@ export default function SortingVisualizer() {
         const newArr = generateArray(arraySize);
         setArr(newArr);
         getAnimations(newArr);
+        setCompArr(getAnimationStateArray(newArr.length, -1, -1));
+        setOverwriteArr(getAnimationStateArray(newArr.length, -1, -1));
+        setSwapArr(getAnimationStateArray(newArr.length, -1, -1));
         setPlayPosition(0);
+
     }
 
     if (isLoading) {
@@ -220,7 +254,7 @@ export default function SortingVisualizer() {
                         <Bar
                             key={index}
                             value={el}
-                            state={getState(index)}
+                            state={getState(index, swapArr, compArr, overwriteArr)}
                             type={arraySize <= nicerNumber((window.innerWidth - 100) / barSizes.medium) ? "md" : "sm"}
                         />
                     )
@@ -245,19 +279,19 @@ export default function SortingVisualizer() {
                         }
                     </motion.button>
 
-                    <div className="lg:w-[512px] sm:w-[128px] md:w-[256px] h-5 bg-white dark:bg-slate-500 relative rounded-full">
+                    <div className="sm:w-[512px] w-11/12 h-5 bg-white dark:bg-slate-500 relative rounded-full">
 
                         <div
                             className="h-full rounded-full bg-blue-500  absolute left-0 shadow-xl shadow-blue-500"
-                            style={{ width: `${(playPosition / (animationsLength) * 100)}%` }}
+                            style={{ width: `${(playPosition / animationsLength * 100)}%` }}
                         ></div>
                         <input
                             type="range"
-                            min={1}
+                            min={0}
                             max={animationsLength}
                             value={playPosition}
                             onChange={handlePointer}
-                            className="lg:w-[512px] sm:w-[128px] md:w-[256px] h-full opacity-0 cursor-pointer"
+                            className="w-full h-full opacity-0 cursor-pointer"
                         />
                     </div>
                 </div>
