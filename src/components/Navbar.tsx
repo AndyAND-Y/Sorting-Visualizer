@@ -7,6 +7,14 @@ import useColorMode from '@/util/hooks/useColorMode';
 
 import { BsMoon, BsSun } from "react-icons/bs";
 
+const sortings: { [k in SortingAlgoType]: string } = {
+    bubbleSort: "Bubble Sort",
+    selectionSort: "Selection Sort",
+    mergeSort: "Merge Sort",
+    quickSort: "Quick Sort",
+    heapSort: "Heap Sort",
+}
+
 const AnimatedNavbar = () => {
 
     const [isNavbarOn, setIsNavbarOn] = useState(true);
@@ -85,10 +93,12 @@ const AnimatedNavbar = () => {
                             disabled={!isNavbarOn}
                         >
 
-                            <option value="bubbleSort" className='font-bold'>Bubble Sort</option>
-                            <option value="selectionSort" className='font-bold'>Selection Sort</option>
-                            <option value="mergeSort" className='font-bold'>MergeSort</option>
-                            <option value="quickSort" className='font-bold'>QuickSort</option>
+                            {
+                                Object.keys(sortings).map((el, index) => {
+                                    return <option className='font-bold' value={el} key={index}>{sortings[el as SortingAlgoType]}</option>
+                                })
+                            }
+
                         </select>
                     </motion.nav>
                     <motion.button

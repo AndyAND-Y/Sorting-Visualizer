@@ -3,5 +3,6 @@ export type SortingAlgoType =
     "selectionSort" |
     "mergeSort" |
     "quickSort" |
+    "heapSort" |
 
     {} & null
