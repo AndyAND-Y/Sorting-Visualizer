@@ -1,11 +1,9 @@
 import { Animation } from "@/types/Animation";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
 
 export default function Bar({ value, type, state }: { value: number, type: "sm" | "md", state: Animation['type'] }) {
 
     const colors = ["bg-red-500", "bg-slate-700 dark:bg-slate-900", "bg-cyan-500 dark:bg-cyan-500", "bg-amber-500 dark: bg-amber-500"];
-
 
     const getColor = (state: Animation['type']) => {
         if (state === "default") {

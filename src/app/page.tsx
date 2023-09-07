@@ -1,13 +1,9 @@
 "use client";
-
 import Footer from '@/components/Footer';
 import InfoSection from '@/components/InfoSection';
 import AnimatedNavbar from '@/components/Navbar';
 import SortingVisualizer from '@/components/SortingVisualizer';
 import useLoadingState from '@/util/hooks/useLoadingState';
-import { useEffect, useState } from 'react';
-import { ClipLoader } from 'react-spinners';
-
 
 export default function Home() {
 

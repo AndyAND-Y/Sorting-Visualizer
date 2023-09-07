@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import useSelectSortingAlgo from '@/util/hooks/useSelectSortingAlgo';
 import { SortingAlgoType } from '@/types/SortingType';
@@ -10,6 +10,7 @@ import { BsMoon, BsSun } from "react-icons/bs";
 const sortings: { [k in SortingAlgoType]: string } = {
     bubbleSort: "Bubble Sort",
     selectionSort: "Selection Sort",
+    insertionSort: "Insertion Sort",
     mergeSort: "Merge Sort",
     quickSort: "Quick Sort",
     heapSort: "Heap Sort",

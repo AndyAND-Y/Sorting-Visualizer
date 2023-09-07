@@ -1,10 +1,11 @@
+"use client";
 import { ProgrammingLanguageType } from "@/types/Languages";
 import { SortingAlgoType } from "@/types/SortingType";
 import useSelectSortingAlgo from "@/util/hooks/useSelectSortingAlgo";
 import { CSSProperties, Dispatch, SetStateAction, useState } from "react";
 import SelectorSortingAlgorithms from "@/util/sortings/sortSelector";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
-import { atomOneDark, dracula, stackoverflowDark, stackoverflowLight } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { stackoverflowDark, stackoverflowLight } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { COriginal, CplusplusOriginal, TypescriptOriginal, JavascriptOriginal, PythonOriginal, RustPlain, JavaOriginal, CsharpOriginal } from "devicons-react";
 import { motion } from "framer-motion"
 import { Balancer } from "react-wrap-balancer";
@@ -14,7 +15,6 @@ import { Complexity } from "@/types/Complexities";
 import useColorMode from "@/util/hooks/useColorMode";
 
 export default function InfoSection() {
-
 
     return (
         <>
@@ -265,7 +265,7 @@ function CodeSection() {
             >
                 <SyntaxHighlighter
                     language={language}
-                    style={theme === 'dark' ? dracula : stackoverflowLight}
+                    style={theme === 'dark' ? stackoverflowDark : stackoverflowLight}
                     customStyle={styles}
                     showLineNumbers={true}
                 >

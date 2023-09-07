@@ -4,5 +4,6 @@ export type SortingAlgoType =
     "mergeSort" |
     "quickSort" |
     "heapSort" |
+    "insertionSort" |
 
     {} & null

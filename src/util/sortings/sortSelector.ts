@@ -6,6 +6,7 @@ import mergeSort from "./mergeSort/mergeSort";
 import selectionSort from "./selectionSort/selectionSort";
 import quickSort from "./quickSort/quickSort";
 import heapSort from "./heapSort/heapSort";
+import insertionSort from "./insertionSort/insertionSort";
 
 import codeExampleBubbleSort from "./bubbleSort/codeExamples";
 import codeExampleSelectioSort from "./selectionSort/codeExamples";
@@ -24,13 +25,17 @@ import mergeSortComplexities from "./mergeSort/complexities";
 import bubbleSortComplexities from "./bubbleSort/complexities";
 import quickSortComplexities from "./quickSort/complexities";
 import heapSortComplexities from "./heapSort/complexities";
+import codeExampleInsertionSort from "./insertionSort/codeExamples";
+import insertionSortText from "./insertionSort/textInfo";
+import insertionSortComplexities from "./insertionSort/complexities";
 
 const sortingAlgosMap = {
     bubbleSort,
     mergeSort,
     selectionSort,
     quickSort,
-    heapSort
+    heapSort,
+    insertionSort,
 } as const;
 
 const sortingCodeExamplesMap = {
@@ -39,6 +44,7 @@ const sortingCodeExamplesMap = {
     selectionSort: codeExampleSelectioSort,
     quickSort: codeExampleQuickSort,
     heapSort: codeExampleHeapSort,
+    insertionSort: codeExampleInsertionSort,
 } as const;
 
 const sortingTextMap = {
@@ -47,6 +53,7 @@ const sortingTextMap = {
     selectionSort: selectionSortText,
     quickSort: quickSortText,
     heapSort: heapSortText,
+    insertionSort: insertionSortText
 } as const;
 
 const complexitiesMap = {
@@ -55,6 +62,7 @@ const complexitiesMap = {
     selectionSort: selectionSortComplexities,
     quickSort: quickSortComplexities,
     heapSort: heapSortComplexities,
+    insertionSort: insertionSortComplexities
 } as const;
 
 

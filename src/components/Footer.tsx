@@ -8,6 +8,7 @@ export default function Footer() {
             >
                 <a
                     href={"https://github.com/AndyAND-Y/sorting-algos"}
+                    target="_blank"
                     className="text-slate-700 hover:text-slate-800 dark:text-white bg-white dark:bg-slate-700 p-2 rounded-full"
                 >
                     <svg
@@ -20,7 +21,8 @@ export default function Footer() {
                     </svg>
                 </a>
                 <a
-                    href={""}
+                    href={"https://www.linkedin.com/in/andrei-slatinaru/"}
+                    target="_blank"
                     className="text-slate-700 hover:text-slate-800 dark:text-white bg-white dark:bg-slate-700 p-2 rounded-full"
                 >
                     <svg
@@ -33,7 +35,8 @@ export default function Footer() {
                     </svg>
                 </a>
                 <a
-                    href={""}
+                    href={"https://www.instagram.com/andy__andy__/"}
+                    target="_blank"
                     className="text-slate-700 hover:text-slate-800 dark:text-white bg-white dark:bg-slate-700 p-2 rounded-full"
                 >
                     <svg
