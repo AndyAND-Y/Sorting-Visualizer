@@ -31,19 +31,30 @@ export default function InfoSection() {
 
 }
 
-const LiElement: React.FC<{ children: React.ReactNode, setLanguage: Dispatch<SetStateAction<ProgrammingLanguageType>>, language: ProgrammingLanguageType }> = ({ children, setLanguage, language }) => {
+const LiElement: React.FC<{ children: React.ReactNode, setLanguage: Dispatch<SetStateAction<ProgrammingLanguageType>>, language: ProgrammingLanguageType, selectedLanguage: ProgrammingLanguageType }> = ({ children, setLanguage, language, selectedLanguage }) => {
+
+    const [theme] = useColorMode()
+
     return (
         <motion.li
-            className="px-2"
+            className={`text-center flex justify-center`}
             whileHover={{
                 scale: 1.2,
                 y: "-15%",
                 transition: { duration: 0.5 }
             }}
             whileTap={{ scale: 0.8 }}
+
             onClick={() => { setLanguage(language) }}
         >
-            {children}
+            <div
+                className="w-fit h-fit p-2 rounded-2xl shadow-inner border-2 border-blue-500"
+                style={{
+                    backgroundColor: language === selectedLanguage ? (theme === "dark" ? "#334155" : "#cbd5e1") : "transparent",
+                }}
+            >
+                {children}
+            </div>
         </motion.li>
     );
 };
@@ -230,30 +241,29 @@ function CodeSection() {
         >
 
             <div className="flex justify-center">
-                <ul className="grid w-full sm:grid-cols-8 grid-cols-4 justify-center text-center border-b border-blue-500 gap-4 p-4 pb-2">
-                    <LiElement setLanguage={setLanguage} language={"c"}>
+                <ul className="grid w-full sm:grid-cols-8 grid-cols-4 justify-center items-center text-center border-b border-blue-500 gap-4 p-2">
+                    <LiElement setLanguage={setLanguage} language={"c"} selectedLanguage={language}>
                         <COriginal size={"32"} />
                     </LiElement>
-                    <LiElement setLanguage={setLanguage} language={"cpp"}>
+                    <LiElement setLanguage={setLanguage} language={"cpp"} selectedLanguage={language}>
                         <CplusplusOriginal size={"32"} />
                     </LiElement >
-                    <LiElement setLanguage={setLanguage} language={"python"}>
+                    <LiElement setLanguage={setLanguage} language={"python"} selectedLanguage={language}>
                         <PythonOriginal size={"32"} />
                     </LiElement>
-                    <LiElement setLanguage={setLanguage} language={"typescript"}>
+                    <LiElement setLanguage={setLanguage} language={"typescript"} selectedLanguage={language}>
                         <TypescriptOriginal size={"32"} />
                     </LiElement>
-
-                    <LiElement setLanguage={setLanguage} language={"javascript"}>
+                    <LiElement setLanguage={setLanguage} language={"javascript"} selectedLanguage={language}>
                         <JavascriptOriginal size={"32"} />
                     </LiElement>
-                    <LiElement setLanguage={setLanguage} language={"java"}>
+                    <LiElement setLanguage={setLanguage} language={"java"} selectedLanguage={language}>
                         <JavaOriginal size={"32"} />
                     </LiElement>
-                    <LiElement setLanguage={setLanguage} language={"csharp"}>
+                    <LiElement setLanguage={setLanguage} language={"csharp"} selectedLanguage={language}>
                         <CsharpOriginal size={"32"} />
                     </LiElement>
-                    <LiElement setLanguage={setLanguage} language={"rust"}>
+                    <LiElement setLanguage={setLanguage} language={"rust"} selectedLanguage={language}>
                         <RustPlain size={"32"} />
                     </LiElement>
 
