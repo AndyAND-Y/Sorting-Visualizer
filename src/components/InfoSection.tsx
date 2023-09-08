@@ -35,27 +35,56 @@ const LiElement: React.FC<{ children: React.ReactNode, setLanguage: Dispatch<Set
 
     const [theme] = useColorMode()
 
+    const variantsLi = {
+        hover: {
+            scale: 1.2,
+            y: "-10%",
+            transition: { duration: 0.5 }
+        },
+        tap: {
+            scale: 0.8
+        }
+    }
+
+    const variantsDiv = {
+        hover: {
+            opacity: 1,
+            transition: {
+                delay: 0.5
+            }
+        },
+        tap: {
+
+        }
+    }
+
     return (
         <motion.li
-            className={`text-center flex justify-center`}
-            whileHover={{
-                scale: 1.2,
-                y: "-15%",
-                transition: { duration: 0.5 }
-            }}
-            whileTap={{ scale: 0.8 }}
+            className="text-center flex justify-center relative"
+            whileHover="hover"
+            whileTap="tap"
+
+            variants={variantsLi}
 
             onClick={() => { setLanguage(language) }}
         >
+            <motion.p
+                className="absolute p-[6px] text-slate-700 dark:text-white bottom-16 bg-slate-100 dark:bg-slate-600 rounded-2xl border border-blue-500 opacity-0"
+                variants={variantsDiv}
+            >
+                {language.charAt(0).toUpperCase() + language.slice(1)}
+            </motion.p>
             <div
                 className="w-fit h-fit p-2 rounded-2xl shadow-inner border-2 border-blue-500"
                 style={{
-                    backgroundColor: language === selectedLanguage ? (theme === "dark" ? "#334155" : "#cbd5e1") : "transparent",
+                    backgroundColor: language === selectedLanguage ?
+                        (theme === "dark" ? "#0f172a" : "#cbd5e1") :
+                        (theme === "dark" ? "#475569" : "#f1f5f9"),
                 }}
             >
                 {children}
             </div>
-        </motion.li>
+        </motion.li >
     );
 };
 
