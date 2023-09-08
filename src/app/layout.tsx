@@ -37,14 +37,14 @@ export default function RootLayout({
                 <meta property="og:type" content="website" />
                 <meta property="og:title" content="Sorting Visualizer" />
                 <meta property="og:description" content="A useful and fun way to visualize sorting algorithms" />
-                <meta property="og:image" content="https://cdn.discordapp.com/attachments/1095388165969297470/1149669329558851675/image.png" />
+                <meta property="og:image" content="https://sorting-algos-tau.vercel.app/public/image.png" />
 
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta property="twitter:domain" content="sorting-algos-tau.vercel.app" />
                 <meta property="twitter:url" content="https://sorting-algos-tau.vercel.app/" />
                 <meta name="twitter:title" content="Sorting Visualizer" />
                 <meta name="twitter:description" content="A useful and fun way to visualize sorting algorithms" />
-                <meta name="twitter:image" content="https://cdn.discordapp.com/attachments/1095388165969297470/1149669329558851675/image.png" />
+                <meta name="twitter:image" content="https://sorting-algos-tau.vercel.app/public/image.png" />
 
             </head>
             <body className={inter.className}>
