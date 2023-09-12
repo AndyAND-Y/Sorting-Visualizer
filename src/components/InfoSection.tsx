@@ -38,7 +38,7 @@ const LiElement: React.FC<{ children: React.ReactNode, setLanguage: Dispatch<Set
     const variantsLi = {
         hover: {
             scale: 1.2,
-            y: "-10%",
+            y: "-5%",
             transition: { duration: 0.5 }
         },
         tap: {
@@ -49,13 +49,13 @@ const LiElement: React.FC<{ children: React.ReactNode, setLanguage: Dispatch<Set
     const variantsDiv = {
         hover: {
             opacity: 1,
+            display: "flex",
             transition: {
-                delay: 0.5
+                delay: 0.5,
+                duration: 0.5,
             }
         },
-        tap: {
 
-        }
     }
 
     return (
@@ -69,17 +69,19 @@ const LiElement: React.FC<{ children: React.ReactNode, setLanguage: Dispatch<Set
             onClick={() => { setLanguage(language) }}
         >
             <motion.p
-                className="absolute p-[6px] text-slate-700 dark:text-white bottom-16 bg-slate-100 dark:bg-slate-600 rounded-2xl border border-blue-500 opacity-0"
+                className="absolute p-[6px] text-slate-700 dark:text-white bottom-16 bg-slate-100 dark:bg-slate-600 rounded-2xl border border-blue-500 opacity-0 hidden"
                 variants={variantsDiv}
             >
                 {language.charAt(0).toUpperCase() + language.slice(1)}
             </motion.p>
             <div
-                className="w-fit h-fit p-2 rounded-2xl shadow-inner border-2 border-blue-500"
+                className="w-fit h-fit p-2 rounded-2xl shadow-inner"
                 style={{
                     backgroundColor: language === selectedLanguage ?
                         (theme === "dark" ? "#0f172a" : "#cbd5e1") :
-                        (theme === "dark" ? "#475569" : "#f1f5f9"),
+                        (theme === "dark" ? "#334155" : "#f1f5f9"),
+                    borderWidth: language === selectedLanguage ? "3px" : "",
+                    borderColor: language === selectedLanguage ? "rgb(59 130 246 / 1)" : "",
                 }}
             >
                 {children}
@@ -185,11 +187,11 @@ function TextSection() {
                     <motion.div
 
                         initial={{ opacity: 0, y: "-100%", scale: 0 }}
-                        animate={{ backgroundColor: theme === "light" ? "#ffffff" : "#64748b" }}
+                        animate={{ backgroundColor: theme === "light" ? "#ffffff" : "#475569" }}
                         whileInView={{ opacity: 1, y: 0, scale: 1, transition: { delay: 0, duration: 0.5 } }}
                         whileHover={{ scale: 1.1, backgroundColor: getComplexityColors(worstCase, true, theme) }}
                         viewport={{ once: true }}
-                        className="flex justify-center p-4 flex-col rounded-lg bg-white dark:bg-slate-500 text-slate-700 dark:text-white shadow-lg shadow-blue-500 text-center"
+                        className="flex justify-center p-4 flex-col rounded-lg bg-white dark:bg-slate-600 text-slate-700 dark:text-white shadow-md shadow-blue-500 text-center"
                     >
 
                         <p>Worst</p>
@@ -200,11 +202,11 @@ function TextSection() {
                     <motion.div
 
                         initial={{ opacity: 0, y: "-100%", scale: 0, }}
-                        animate={{ backgroundColor: theme === "light" ? "#ffffff" : "#64748b" }}
+                        animate={{ backgroundColor: theme === "light" ? "#ffffff" : "#475569" }}
                         whileInView={{ opacity: 1, y: 0, scale: 1, transition: { delay: 0.3, duration: 0.5 } }}
                         whileHover={{ scale: 1.1, backgroundColor: getComplexityColors(averageCase, true, theme) }}
                         viewport={{ once: true }}
-                        className="flex justify-center p-4 flex-col rounded-lg bg-white dark:bg-slate-500 text-slate-700 dark:text-white shadow-lg shadow-blue-500 text-center"
+                        className="flex justify-center p-4 flex-col rounded-lg bg-white dark:bg-slate-600 text-slate-700 dark:text-white shadow-md shadow-blue-500 text-center"
                     >
                         <p>Average</p>
                         <p>Time:</p>
@@ -214,11 +216,11 @@ function TextSection() {
                     <motion.div
 
                         initial={{ opacity: 0, y: "-100%", scale: 0 }}
-                        animate={{ backgroundColor: theme === "light" ? "#ffffff" : "#64748b" }}
+                        animate={{ backgroundColor: theme === "light" ? "#ffffff" : "#475569" }}
                         whileInView={{ opacity: 1, y: 0, scale: 1, transition: { delay: 0.6, duration: 0.5 } }}
                         whileHover={{ scale: 1.1, backgroundColor: getComplexityColors(auxiliarySpace, false, theme) }}
                         viewport={{ once: true }}
-                        className="flex justify-center p-4 flex-col rounded-lg bg-white dark:bg-slate-500 text-slate-700 dark:text-white shadow-lg shadow-blue-500 text-center"
+                        className="flex justify-center p-4 flex-col rounded-lg bg-white dark:bg-slate-600 text-slate-700 dark:text-white shadow-md shadow-blue-500 text-center"
                     >
                         <p>Auxiliary</p>
                         <p>Space:</p>
@@ -226,7 +228,7 @@ function TextSection() {
                     </motion.div>
                 </ul>
             </div>
-            <div className="flex justify-center w-full p-4 bg-white dark:bg-slate-500 text-slate-700 dark:text-white rounded-lg border border-blue-500 shadow-lg shadow-blue-500">
+            <div className="flex justify-center w-full p-4 bg-white dark:bg-slate-600 text-slate-700 dark:text-white rounded-lg border border-blue-500 shadow-md shadow-blue-500">
 
                 <article className="text-lg flex justify-center flex-col w-full">
                     <Balancer
@@ -252,7 +254,7 @@ function CodeSection() {
     const [theme] = useColorMode();
 
     const styles: CSSProperties = {
-        backgroundColor: theme === 'light' ? "#ffffff" : "#64748b"
+        backgroundColor: theme === 'light' ? "#ffffff" : "#475569"
     }
 
     const getText = (language: ProgrammingLanguageType, sorting: SortingAlgoType) => {
@@ -266,7 +268,7 @@ function CodeSection() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="p-1 bg-white dark:bg-slate-500 h-fit rounded-xl border border-blue-500 shadow-lg shadow-blue-500"
+            className="p-1 bg-white dark:bg-slate-600 h-fit rounded-xl border border-blue-500 shadow-md shadow-blue-500"
         >
 
             <div className="flex justify-center">

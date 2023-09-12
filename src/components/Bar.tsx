@@ -30,7 +30,7 @@ export default function Bar({ value, type, state }: { value: number, type: "sm" 
         >
             {
                 type === "md" && <p
-                    className="bg-white dark:bg-slate-500  text-slate-700 dark:text-white w-6 text-center"
+                    className="bg-white dark:bg-slate-600  text-slate-700 dark:text-white w-6 text-center"
                 >{value}</p>
             }
         </motion.div >

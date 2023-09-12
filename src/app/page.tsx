@@ -14,7 +14,7 @@ export default function Home() {
             {!isLoading &&
                 <div>
                     <AnimatedNavbar />
-                    <div className='h-14' />
+                    <div className='h-16' />
                 </div>
             }
 
