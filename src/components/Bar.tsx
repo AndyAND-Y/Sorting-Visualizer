@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export default function Bar({ value, type, state }: { value: number, type: "sm" | "md", state: Animation['type'] }) {
 
-    const colors = ["bg-red-500", "bg-slate-700 dark:bg-slate-900", "bg-cyan-500 dark:bg-cyan-500", "bg-amber-500 dark: bg-amber-500"];
+    const colors = ["bg-red-500 dark:bg-red-500", "bg-slate-700 dark:bg-slate-900", "bg-cyan-500 dark:bg-cyan-500", "bg-amber-500 dark: bg-amber-500"];
 
     const getColor = (state: Animation['type']) => {
         if (state === "default") {
@@ -30,7 +30,7 @@ export default function Bar({ value, type, state }: { value: number, type: "sm" 
         >
             {
                 type === "md" && <p
-                    className="bg-white dark:bg-slate-600  text-slate-700 dark:text-white w-6 text-center"
+                    className="bg-white dark:bg-slate-600 text-slate-700 dark:text-white w-6 text-center"
                 >{value}</p>
             }
         </motion.div >
